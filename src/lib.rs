@@ -1,7 +1,6 @@
-mod utils;
-mod point;
-
-use wasm_bindgen::prelude::*;
+pub mod hex;
+pub mod mat;
+pub mod point;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -9,13 +8,15 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-#[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
+pub trait Descriptor {
+    type ValueType;
 }
 
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, cao-math!");
-}
+use wasm_bindgen::prelude::*;
 
+#[wasm_bindgen]
+/// Init the error handling of the library
+pub fn init() {
+    #[cfg(feature = "console_error_panic_hook")]
+    console_error_panic_hook::set_once();
+}
