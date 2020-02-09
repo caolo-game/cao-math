@@ -5,9 +5,10 @@ use std::mem::swap;
 use wasm_bindgen::prelude::*;
 
 macro_rules! impl_square_mat {
-    ($mat: ident, $val: ty, $dim: expr, $vec: ty, $proxy: ident) => {
+    ($mat: ident, $val: ty, $dim: expr, $vec: ident, $proxy: ident) => {
         pub mod $mat {
             use super::*;
+            use $vec::*;
 
             #[derive(Debug, Clone, Default, Serialize, Deserialize)]
             pub struct Matrix {
@@ -42,9 +43,9 @@ macro_rules! impl_square_mat {
                 pub fn left_prod(&self, vecs: Box<[JsValue]>) -> Result<JsValue, JsValue> {
                     let mut res = Vec::new();
                     for v in vecs.into_iter() {
-                        let v: $vec = serde_wasm_bindgen::from_value(v.clone())?;
+                        let v: Point = serde_wasm_bindgen::from_value(v.clone())?;
                         let v = self.val.left_prod(v.into());
-                        let v = <$vec>::from(v);
+                        let v = <Point>::from(v);
                         res.push(v);
                     }
                     let res = res.into_boxed_slice();
@@ -57,9 +58,9 @@ macro_rules! impl_square_mat {
                 pub fn right_prod(&self, vecs: Box<[JsValue]>) -> Result<JsValue, JsValue> {
                     let mut res = Vec::new();
                     for v in vecs.into_iter() {
-                        let v: $vec = serde_wasm_bindgen::from_value(v.clone())?;
+                        let v: Point = serde_wasm_bindgen::from_value(v.clone())?;
                         let v = self.val.right_prod(v.into());
-                        let v = <$vec>::from(v);
+                        let v = <Point>::from(v);
                         res.push(v);
                     }
                     let res = res.into_boxed_slice();
@@ -106,5 +107,5 @@ macro_rules! impl_square_mat {
     };
 }
 
-impl_square_mat!(mat2i, i32, 2, Point2, Matrix2Int);
-impl_square_mat!(mat2f, f32, 2, Vec2, Matrix2Float);
+impl_square_mat!(mat2i, i32, 2, vec2i32, Matrix2Int);
+impl_square_mat!(mat2f, f32, 2, vec2f32, Matrix2Float);

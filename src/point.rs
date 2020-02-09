@@ -5,152 +5,161 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, 
 use wasm_bindgen::prelude::*;
 
 macro_rules! implvec2d {
-    ($name: ident, $val: ty) => {
-        #[wasm_bindgen]
-        #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
-        pub struct $name {
-            pub x: $val,
-            pub y: $val,
-        }
+    ($name: ident, $val: ty, $proxy: ident) => {
+        pub mod $name {
+            use super::*;
 
-        #[wasm_bindgen]
-        impl $name {
-            #[wasm_bindgen(constructor)]
-            pub fn new(x: $val, y: $val) -> Self {
-                Self { x, y }
+            #[wasm_bindgen(js_name=$proxy)]
+            #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+            pub struct Point {
+                pub x: $val,
+                pub y: $val,
             }
 
-            #[wasm_bindgen]
-            pub fn swap(&mut self, other: &mut $name) {
-                swap(self, other);
-            }
+            #[wasm_bindgen(js_class=$proxy)]
+            impl Point {
+                #[wasm_bindgen(constructor)]
+                pub fn new(x: $val, y: $val) -> Self {
+                    Self { x, y }
+                }
 
-            #[wasm_bindgen]
-            pub fn transponent(&self) -> Self {
-                Self {
-                    x: self.y,
-                    y: self.x,
+                #[wasm_bindgen]
+                pub fn swap(&mut self, other: &mut Point) {
+                    swap(self, other);
+                }
+
+                #[wasm_bindgen]
+                pub fn transponent(&self) -> Self {
+                    Self {
+                        x: self.y,
+                        y: self.x,
+                    }
+                }
+
+                #[wasm_bindgen]
+                pub fn dot(&self, b: Self) -> $val {
+                    self.x * b.x + self.y + b.y
                 }
             }
-        }
 
-        impl Into<[$val; 2]> for $name {
-            fn into(self) -> [$val; 2] {
-                [self.x, self.y]
-            }
-        }
-
-        impl Into<[$val; 2]> for &$name {
-            fn into(self) -> [$val; 2] {
-                [self.x, self.y]
-            }
-        }
-
-        impl<'a> Into<[&'a mut $val; 2]> for &'a mut $name {
-            fn into(self) -> [&'a mut $val; 2] {
-                [&mut self.x, &mut self.y]
-            }
-        }
-
-        impl From<[$val; 2]> for $name {
-            fn from([x, y]: [$val; 2]) -> Self {
-                Self { x, y }
-            }
-        }
-
-        impl Index<usize> for $name {
-            type Output = $val;
-            fn index(&self, index: usize) -> &$val {
-                match index {
-                    0 => &self.x,
-                    1 => &self.y,
-                    _ => panic!("Point index {} is out of range", index),
+            impl Into<[$val; 2]> for Point {
+                fn into(self) -> [$val; 2] {
+                    [self.x, self.y]
                 }
             }
-        }
 
-        impl IndexMut<usize> for $name {
-            fn index_mut(&mut self, index: usize) -> &mut $val {
-                match index {
-                    0 => &mut self.x,
-                    1 => &mut self.y,
-                    _ => panic!("Point index {} is out of range", index),
+            impl Into<[$val; 2]> for &Point {
+                fn into(self) -> [$val; 2] {
+                    [self.x, self.y]
                 }
             }
-        }
 
-        impl AddAssign for $name {
-            fn add_assign(&mut self, p: Self) {
-                self.x += p.x;
-                self.y += p.y;
+            impl<'a> Into<[&'a mut $val; 2]> for &'a mut Point {
+                fn into(self) -> [&'a mut $val; 2] {
+                    [&mut self.x, &mut self.y]
+                }
             }
-        }
 
-        impl Add for $name {
-            type Output = Self;
-
-            fn add(mut self, p: Self) -> Self {
-                self += p;
-                self
+            impl From<[$val; 2]> for Point {
+                fn from([x, y]: [$val; 2]) -> Self {
+                    Self { x, y }
+                }
             }
-        }
 
-        impl SubAssign for $name {
-            fn sub_assign(&mut self, p: Self) {
-                self.x -= p.x;
-                self.y -= p.y;
+            impl Index<usize> for Point {
+                type Output = $val;
+                fn index(&self, index: usize) -> &$val {
+                    match index {
+                        0 => &self.x,
+                        1 => &self.y,
+                        _ => panic!("Point index {} is out of range", index),
+                    }
+                }
             }
-        }
 
-        impl Sub for $name {
-            type Output = Self;
-
-            fn sub(mut self, p: Self) -> Self {
-                self -= p;
-                self
+            impl IndexMut<usize> for Point {
+                fn index_mut(&mut self, index: usize) -> &mut $val {
+                    match index {
+                        0 => &mut self.x,
+                        1 => &mut self.y,
+                        _ => panic!("Point index {} is out of range", index),
+                    }
+                }
             }
-        }
 
-        impl MulAssign<$val> for $name {
-            fn mul_assign(&mut self, a: $val) {
-                self.x *= a;
-                self.y *= a;
+            impl AddAssign for Point {
+                fn add_assign(&mut self, p: Self) {
+                    self.x += p.x;
+                    self.y += p.y;
+                }
             }
-        }
 
-        impl Mul<$val> for $name {
-            type Output = Self;
+            impl Add for Point {
+                type Output = Self;
 
-            fn mul(mut self, a: $val) -> Self {
-                self *= a;
-                self
+                fn add(mut self, p: Self) -> Self {
+                    self += p;
+                    self
+                }
             }
-        }
 
-        impl DivAssign<$val> for $name {
-            fn div_assign(&mut self, a: $val) {
-                self.x /= a;
-                self.y /= a;
+            impl SubAssign for Point {
+                fn sub_assign(&mut self, p: Self) {
+                    self.x -= p.x;
+                    self.y -= p.y;
+                }
             }
-        }
 
-        impl Div<$val> for $name {
-            type Output = Self;
+            impl Sub for Point {
+                type Output = Self;
 
-            fn div(mut self, a: $val) -> Self {
-                self /= a;
-                self
+                fn sub(mut self, p: Self) -> Self {
+                    self -= p;
+                    self
+                }
+            }
+
+            impl MulAssign<$val> for Point {
+                fn mul_assign(&mut self, a: $val) {
+                    self.x *= a;
+                    self.y *= a;
+                }
+            }
+
+            impl Mul<$val> for Point {
+                type Output = Self;
+
+                fn mul(mut self, a: $val) -> Self {
+                    self *= a;
+                    self
+                }
+            }
+
+            impl DivAssign<$val> for Point {
+                fn div_assign(&mut self, a: $val) {
+                    self.x /= a;
+                    self.y /= a;
+                }
+            }
+
+            impl Div<$val> for Point {
+                type Output = Self;
+
+                fn div(mut self, a: $val) -> Self {
+                    self /= a;
+                    self
+                }
             }
         }
     };
 }
 
-implvec2d!(Point2, i32);
-implvec2d!(Vec2, f32);
+implvec2d!(vec2i32, i32, Vec2Int);
+implvec2d!(vec2f32, f32, Vec2Float);
 
-impl DivAssign<f32> for Point2 {
+impl DivAssign<f32> for vec2i32::Point {
     fn div_assign(&mut self, a: f32) {
-        let Point2 { x, y } = self;
+        let vec2i32::Point { x, y } = self;
         let [mut x, mut y] = [*x as f32, *y as f32];
         x /= a;
         y /= a;
@@ -159,7 +168,7 @@ impl DivAssign<f32> for Point2 {
     }
 }
 
-impl Div<f32> for Point2 {
+impl Div<f32> for vec2i32::Point {
     type Output = Self;
 
     fn div(mut self, a: f32) -> Self {
@@ -168,9 +177,9 @@ impl Div<f32> for Point2 {
     }
 }
 
-impl MulAssign<f32> for Point2 {
+impl MulAssign<f32> for vec2i32::Point {
     fn mul_assign(&mut self, a: f32) {
-        let Point2 { x, y } = self;
+        let vec2i32::Point { x, y } = self;
         let [mut x, mut y] = [*x as f32, *y as f32];
         x *= a;
         y *= a;
@@ -179,7 +188,7 @@ impl MulAssign<f32> for Point2 {
     }
 }
 
-impl Mul<f32> for Point2 {
+impl Mul<f32> for vec2i32::Point {
     type Output = Self;
 
     fn mul(mut self, a: f32) -> Self {
@@ -187,15 +196,3 @@ impl Mul<f32> for Point2 {
         self
     }
 }
-
-macro_rules! implblas1 {
-    ($name: ident, $val:ty, $dot:ident, $cross: ident) => {
-        #[wasm_bindgen]
-        pub fn $dot(a: $name, b: $name) -> $val {
-            a.x * b.x + a.y + b.y
-        }
-    };
-}
-
-implblas1!(Point2, i32, dot_point2, cross_point2);
-implblas1!(Vec2, f32, dot_vec2, cross_vec2);
