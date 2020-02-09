@@ -40,36 +40,44 @@ macro_rules! impl_square_mat {
 
                 #[wasm_bindgen(js_name=leftProd)]
                 /// Calculate the `a*M` product for all vector `a` in `vecs`
-                pub fn left_prod(&self, vecs: Box<[JsValue]>) -> Result<JsValue, JsValue> {
-                    let mut res = Vec::new();
-                    for v in vecs.into_iter() {
-                        let v: Point = serde_wasm_bindgen::from_value(v.clone())?;
-                        let v = self.val.left_prod(v.into());
-                        let v = <Point>::from(v);
-                        res.push(v);
-                    }
-                    let res = res.into_boxed_slice();
-                    let res = JsValue::from_serde(&res).unwrap();
-                    Ok(res)
+                pub fn left_prod(&self, v: &Point) -> Point {
+                    let v = self.val.left_prod(v.into());
+                    <Point>::from(v)
                 }
 
                 #[wasm_bindgen(js_name=rightProd)]
                 /// Calculate the `M*a` product for all vector `a` in `vecs`
-                pub fn right_prod(&self, vecs: Box<[JsValue]>) -> Result<JsValue, JsValue> {
-                    let mut res = Vec::new();
-                    for v in vecs.into_iter() {
-                        let v: Point = serde_wasm_bindgen::from_value(v.clone())?;
-                        let v = self.val.right_prod(v.into());
-                        let v = <Point>::from(v);
-                        res.push(v);
-                    }
-                    let res = res.into_boxed_slice();
-                    let res = JsValue::from_serde(&res).unwrap();
-                    Ok(res)
+                pub fn right_prod(&self, v: &Point) -> Point {
+                    let v = self.val.right_prod(v.into());
+                    <Point>::from(v)
+                }
+
+                #[wasm_bindgen(js_name=scaleMatrix)]
+                pub fn scale(a: $val) -> Self {
+                    Matrix::scale(a).into()
+                }
+            }
+
+            impl From<Matrix> for Proxy {
+                fn from(val: Matrix) -> Self {
+                    Self { val }
                 }
             }
 
             impl Matrix {
+                #[inline]
+                pub fn scale(a: $val) -> Self {
+                    let mut mat = Self::default();
+                    for i in 0..$dim {
+                        for j in 0..$dim {
+                            if i == j {
+                                mat.set(i, j, a);
+                            }
+                        }
+                    }
+                    mat
+                }
+
                 #[inline]
                 pub fn swap(&mut self, other: &mut Matrix) {
                     swap(self, other);
@@ -87,6 +95,13 @@ macro_rules! impl_square_mat {
                     assert!(col < $dim);
                     assert!(row < $dim);
                     &mut self.values[row * $dim + col]
+                }
+
+                #[inline]
+                pub fn set(&mut self, col: usize, row: usize, val: $val) {
+                    assert!(col < $dim);
+                    assert!(row < $dim);
+                    self.values[row * $dim + col] = val;
                 }
 
                 #[inline]
@@ -115,7 +130,6 @@ macro_rules! impl_square_mat {
     };
 }
 
-impl_square_mat!(mat2i32, i32, 2, vec2i32, Matrix2Int);
 impl_square_mat!(mat2f32, f32, 2, vec2f32, Matrix2Float);
 
 #[cfg(test)]
@@ -155,6 +169,6 @@ mod tests {
         let p = [1., 2.];
         let res = mat.left_prod(p);
 
-        assert_eq!(res, [SQRT3APROX , 3.8660254]);
+        assert_eq!(res, [SQRT3APROX, 3.8660254]);
     }
 }

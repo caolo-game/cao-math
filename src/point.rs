@@ -9,7 +9,7 @@ macro_rules! implvec2d {
         pub mod $name {
             use super::*;
 
-            #[wasm_bindgen(js_name=$proxy)]
+            #[wasm_bindgen(js_name=$proxy, inspectable)]
             #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
             pub struct Point {
                 pub x: $val,
@@ -154,45 +154,4 @@ macro_rules! implvec2d {
     };
 }
 
-implvec2d!(vec2i32, i32, Vec2Int);
 implvec2d!(vec2f32, f32, Vec2Float);
-
-impl DivAssign<f32> for vec2i32::Point {
-    fn div_assign(&mut self, a: f32) {
-        let vec2i32::Point { x, y } = self;
-        let [mut x, mut y] = [*x as f32, *y as f32];
-        x /= a;
-        y /= a;
-        self.x = x as i32;
-        self.y = y as i32;
-    }
-}
-
-impl Div<f32> for vec2i32::Point {
-    type Output = Self;
-
-    fn div(mut self, a: f32) -> Self {
-        self /= a;
-        self
-    }
-}
-
-impl MulAssign<f32> for vec2i32::Point {
-    fn mul_assign(&mut self, a: f32) {
-        let vec2i32::Point { x, y } = self;
-        let [mut x, mut y] = [*x as f32, *y as f32];
-        x *= a;
-        y *= a;
-        self.x = x as i32;
-        self.y = y as i32;
-    }
-}
-
-impl Mul<f32> for vec2i32::Point {
-    type Output = Self;
-
-    fn mul(mut self, a: f32) -> Self {
-        self *= a;
-        self
-    }
-}
