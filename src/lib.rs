@@ -16,7 +16,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 /// Init the error handling of the library
-pub fn init() {
+pub fn init_error_handling() {
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
 }

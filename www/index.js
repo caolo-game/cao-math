@@ -1,11 +1,11 @@
 import * as wasm from "cao-math";
 
-wasm.init();
+wasm.init_error_handling();
 
 const points = [];
 for (let i = 0; i < 4; ++i) {
   for (let j = 0; j < 4; ++j) {
-    points.push(new wasm.Point2(i, j));
+    points.push(new wasm.Vec2Int(i, j));
   }
 }
 
@@ -14,7 +14,7 @@ mat.set(0, 0, 1);
 mat.set(1, 1, 2);
 
 console.log(points, mat);
-const results = mat.leftProd(points);
+const results = mat.rightProd(points);
 
 document.getElementById("test-results").innerText = `
 All done

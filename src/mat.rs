@@ -70,34 +70,42 @@ macro_rules! impl_square_mat {
             }
 
             impl Matrix {
+                #[inline]
                 pub fn swap(&mut self, other: &mut Matrix) {
                     swap(self, other);
                 }
 
+                #[inline]
                 pub fn at(&self, col: usize, row: usize) -> $val {
-                    // column major
+                    assert!(col < $dim);
+                    assert!(row < $dim);
                     self.values[row * $dim + col]
                 }
 
+                #[inline]
                 pub fn at_mut(&mut self, col: usize, row: usize) -> &mut $val {
+                    assert!(col < $dim);
+                    assert!(row < $dim);
                     &mut self.values[row * $dim + col]
                 }
 
+                #[inline]
                 pub fn left_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
                     for c in 0..$dim {
                         for r in 0..$dim {
-                            res[c] += v[c] * self.at(c, r);
+                            res[c] += v[r] * self.at(c, r);
                         }
                     }
                     res
                 }
 
+                #[inline]
                 pub fn right_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
-                    for c in 0..$dim {
-                        for r in 0..$dim {
-                            res[c] += v[c] * self.at(r, c);
+                    for r in 0..$dim {
+                        for c in 0..$dim {
+                            res[r] += v[c] * self.at(c, r);
                         }
                     }
                     res
@@ -107,5 +115,46 @@ macro_rules! impl_square_mat {
     };
 }
 
-impl_square_mat!(mat2i, i32, 2, vec2i32, Matrix2Int);
-impl_square_mat!(mat2f, f32, 2, vec2f32, Matrix2Float);
+impl_square_mat!(mat2i32, i32, 2, vec2i32, Matrix2Int);
+impl_square_mat!(mat2f32, f32, 2, vec2f32, Matrix2Float);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn basic_right_prod_2by2() {
+        use mat2f32::*;
+
+        const SQRT3APROX: f32 = 1.73205080757;
+
+        let mut mat = Matrix::default();
+        *mat.at_mut(0, 0) = SQRT3APROX;
+        *mat.at_mut(1, 0) = SQRT3APROX / 2.0;
+        *mat.at_mut(0, 1) = 0.0;
+        *mat.at_mut(1, 1) = 3.0 / 2.0;
+
+        let p = [1., 2.];
+        let res = mat.right_prod(p);
+
+        assert_eq!(res, [SQRT3APROX * 2., 3.]);
+    }
+
+    #[test]
+    fn basic_left_prod_2by2() {
+        use mat2f32::*;
+
+        const SQRT3APROX: f32 = 1.73205080757;
+
+        let mut mat = Matrix::default();
+        *mat.at_mut(0, 0) = SQRT3APROX;
+        *mat.at_mut(1, 0) = SQRT3APROX / 2.0;
+        *mat.at_mut(0, 1) = 0.0;
+        *mat.at_mut(1, 1) = 3.0 / 2.0;
+
+        let p = [1., 2.];
+        let res = mat.left_prod(p);
+
+        assert_eq!(res, [SQRT3APROX , 3.8660254]);
+    }
+}
