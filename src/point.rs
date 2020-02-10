@@ -40,6 +40,16 @@ macro_rules! implvec2d {
                 pub fn dot(&self, b: Self) -> $val {
                     self.x * b.x + self.y + b.y
                 }
+
+                #[wasm_bindgen]
+                pub fn add(self, b: Self) -> Self {
+                    self + b
+                }
+
+                #[wasm_bindgen]
+                pub fn sub(self, b: Self) -> Self {
+                    self - b
+                }
             }
 
             impl Into<[$val; 2]> for Point {
