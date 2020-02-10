@@ -12,7 +12,7 @@ macro_rules! impl_square_mat {
 
             #[derive(Debug, Clone, Default, Serialize, Deserialize)]
             pub struct Matrix {
-                pub values: [$val; $dim * $dim],
+                values: [$val; $dim * $dim],
             }
 
             #[wasm_bindgen(js_name=$proxy)]
@@ -41,15 +41,15 @@ macro_rules! impl_square_mat {
                 #[wasm_bindgen(js_name=leftProd)]
                 /// Calculate the `a*M` product
                 pub fn left_prod(&self, a: &Point) -> Point {
-                    let v = self.val.left_prod(v.into());
-                    <Point>::from(v)
+                    let a = self.val.left_prod(a.into());
+                    <Point>::from(a)
                 }
 
                 #[wasm_bindgen(js_name=rightProd)]
                 /// Calculate the `M*a` product
                 pub fn right_prod(&self, a: &Point) -> Point {
-                    let v = self.val.right_prod(v.into());
-                    <Point>::from(v)
+                    let a = self.val.right_prod(a.into());
+                    <Point>::from(a)
                 }
 
                 #[wasm_bindgen(js_name=scaleMatrix)]
@@ -65,7 +65,6 @@ macro_rules! impl_square_mat {
             }
 
             impl Matrix {
-                #[inline]
                 pub fn scale(a: $val) -> Self {
                     let mut mat = Self::default();
                     for i in 0..$dim {
@@ -78,33 +77,28 @@ macro_rules! impl_square_mat {
                     mat
                 }
 
-                #[inline]
                 pub fn swap(&mut self, other: &mut Matrix) {
                     swap(self, other);
                 }
 
-                #[inline]
                 pub fn at(&self, col: usize, row: usize) -> $val {
                     assert!(col < $dim);
                     assert!(row < $dim);
                     self.values[row * $dim + col]
                 }
 
-                #[inline]
                 pub fn at_mut(&mut self, col: usize, row: usize) -> &mut $val {
                     assert!(col < $dim);
                     assert!(row < $dim);
                     &mut self.values[row * $dim + col]
                 }
 
-                #[inline]
                 pub fn set(&mut self, col: usize, row: usize, val: $val) {
                     assert!(col < $dim);
                     assert!(row < $dim);
                     self.values[row * $dim + col] = val;
                 }
 
-                #[inline]
                 pub fn left_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
                     for c in 0..$dim {
@@ -115,7 +109,6 @@ macro_rules! impl_square_mat {
                     res
                 }
 
-                #[inline]
                 pub fn right_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
                     for r in 0..$dim {

@@ -1,25 +1,27 @@
 import * as wasm from "cao-math";
+import { bench } from "./bench";
 
 wasm.init_error_handling();
 
 const points = [];
-const RADIUS = 32;
-for (let i = -RADIUS; i <= RADIUS; ++i) {
-  for (let j = -RADIUS; j <= RADIUS; ++j) {
+const RADIUS = 100;
+for (let i = 0; i <= RADIUS; ++i) {
+  for (let j = 0; j <= RADIUS; ++j) {
     points.push(new wasm.Vec2Float(i, j));
   }
 }
 
+const OFFSET = 100;
 const renderList = (ctx, points) => {
   ctx.fillStyle = "#000000";
   for (let p of points) {
     const circle = new Path2D();
-    circle.arc(145 + p.x, 145 + p.y, 5, 0, 2 * Math.PI);
+    circle.arc(OFFSET + p.x, OFFSET + p.y, 3, 0, 2 * Math.PI);
     ctx.fill(circle);
   }
   ctx.fillStyle = "#ff0000";
   const circle = new Path2D();
-  circle.arc(145, 145, 5, 0, 2 * Math.PI);
+  circle.arc(OFFSET, OFFSET, 3, 0, 2 * Math.PI);
   ctx.fill(circle);
 };
 
@@ -32,26 +34,33 @@ renderList(
   points.map(p => scale.rightProd(p))
 );
 
-const a2p = wasm.axialToPixelMatrix();
-console.time("calculate projections");
-let results = points.map(p => {
-  p = a2p.rightProd(p);
-  return scale.rightProd(p);
+const a2p = wasm.axialToPixelMatrixPointy();
+
+bench(
+  "axial to pixel",
+  () => {
+    points.forEach(p => {
+      p = a2p.rightProd(p);
+      p = scale.rightProd(p);
+    });
+  },
+  {
+    sampleSize: 10,
+    iterations: 10
+  }
+).then(res => {
+  console.log(res);
+  const summary = document.createElement("pre");
+  summary.innerText = JSON.stringify(res, null, 4);
+  document.getElementById("bench-results").appendChild(summary);
 });
-console.timeEnd("calculate projections");
-console.log(results);
-console.time("calculate projections2");
-results = [
-  ...results,
-  ...points.map(p => {
+
+setTimeout(() => {
+  const results = points.map(p => {
     p = a2p.rightProd(p);
     return scale.rightProd(p);
-  })
-];
-console.timeEnd("calculate projections2");
-console.log(results);
-
-canvas = document.getElementById("transformed");
-ctx = canvas.getContext("2d");
-
-renderList(ctx, results);
+  });
+  canvas = document.getElementById("transformed");
+  ctx = canvas.getContext("2d");
+  renderList(ctx, results);
+}, 0);
