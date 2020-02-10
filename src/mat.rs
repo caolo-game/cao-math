@@ -10,9 +10,13 @@ macro_rules! impl_square_mat {
             use super::*;
             use $vec::*;
 
+            type Storage = [[$val; $dim]; $dim];
+
             #[derive(Debug, Clone, Default, Serialize, Deserialize)]
             pub struct Matrix {
-                values: [$val; $dim * $dim],
+                // since these are just arrays we can use a 2d array instead of a flat buffer
+                // without any problems down the line
+                values: Storage,
             }
 
             #[wasm_bindgen(js_name=$proxy)]
@@ -64,6 +68,12 @@ macro_rules! impl_square_mat {
                 }
             }
 
+            impl From<Storage> for Matrix {
+                fn from(values: Storage) -> Self {
+                    Self { values }
+                }
+            }
+
             impl Matrix {
                 pub fn scale(a: $val) -> Self {
                     let mut mat = Self::default();
@@ -84,19 +94,19 @@ macro_rules! impl_square_mat {
                 pub fn at(&self, col: usize, row: usize) -> $val {
                     assert!(col < $dim);
                     assert!(row < $dim);
-                    self.values[row * $dim + col]
+                    self.values[row][col]
                 }
 
                 pub fn at_mut(&mut self, col: usize, row: usize) -> &mut $val {
                     assert!(col < $dim);
                     assert!(row < $dim);
-                    &mut self.values[row * $dim + col]
+                    &mut self.values[row][col]
                 }
 
                 pub fn set(&mut self, col: usize, row: usize, val: $val) {
                     assert!(col < $dim);
                     assert!(row < $dim);
-                    self.values[row * $dim + col] = val;
+                    self.values[row][col] = val;
                 }
 
                 pub fn left_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
