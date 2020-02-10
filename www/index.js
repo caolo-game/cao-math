@@ -11,7 +11,7 @@ for (let i = 0; i <= RADIUS; ++i) {
   }
 }
 
-const OFFSET = 100;
+const OFFSET = 50;
 const renderList = (ctx, points) => {
   ctx.fillStyle = "#000000";
   for (let p of points) {
@@ -63,4 +63,16 @@ setTimeout(() => {
   canvas = document.getElementById("transformed");
   ctx = canvas.getContext("2d");
   renderList(ctx, results);
+
+  const p2a = wasm.pixelToAxialMatrixPointy();
+  const scaleInv = wasm.Matrix2Float.scaleMatrix(0.1);
+  canvas.addEventListener("mousemove", event => {
+    const x = event.offsetX;
+    const y = event.offsetY;
+    let p = new wasm.Vec2Float(x-OFFSET, y-OFFSET);
+    let h = scaleInv.rightProd(p);
+    h = p2a.rightProd(h);
+    h = wasm.roundToNearestHex(h);
+    document.getElementById("transformed-hex-pos").innerText = JSON.stringify(h, null, 2);
+  });
 }, 0);
