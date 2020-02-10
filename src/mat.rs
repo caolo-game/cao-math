@@ -39,15 +39,15 @@ macro_rules! impl_square_mat {
                 }
 
                 #[wasm_bindgen(js_name=leftProd)]
-                /// Calculate the `a*M` product for all vector `a` in `vecs`
-                pub fn left_prod(&self, v: &Point) -> Point {
+                /// Calculate the `a*M` product
+                pub fn left_prod(&self, a: &Point) -> Point {
                     let v = self.val.left_prod(v.into());
                     <Point>::from(v)
                 }
 
                 #[wasm_bindgen(js_name=rightProd)]
-                /// Calculate the `M*a` product for all vector `a` in `vecs`
-                pub fn right_prod(&self, v: &Point) -> Point {
+                /// Calculate the `M*a` product
+                pub fn right_prod(&self, a: &Point) -> Point {
                     let v = self.val.right_prod(v.into());
                     <Point>::from(v)
                 }
