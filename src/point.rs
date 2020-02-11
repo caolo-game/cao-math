@@ -37,18 +37,18 @@ macro_rules! implvec2d {
                 }
 
                 #[wasm_bindgen]
-                pub fn dot(&self, b: Self) -> $val {
+                pub fn dot(&self, b: &Point) -> $val {
                     self.x * b.x + self.y + b.y
                 }
 
                 #[wasm_bindgen]
-                pub fn add(self, b: Self) -> Self {
-                    self + b
+                pub fn add(&self, b: &Point) -> Self {
+                    *self + *b
                 }
 
                 #[wasm_bindgen]
-                pub fn sub(self, b: Self) -> Self {
-                    self - b
+                pub fn sub(&self, b: &Point) -> Self {
+                    *self - *b
                 }
             }
 
