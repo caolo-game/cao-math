@@ -109,6 +109,7 @@ macro_rules! impl_square_mat {
                     self.values[row][col] = val;
                 }
 
+                /// `v*M` where `M` is self
                 pub fn left_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
                     for c in 0..$dim {
@@ -119,6 +120,7 @@ macro_rules! impl_square_mat {
                     res
                 }
 
+                /// `M*v` where `M` is self
                 pub fn right_prod(&self, v: [$val; $dim]) -> [$val; $dim] {
                     let mut res = [<$val>::default(); $dim];
                     for r in 0..$dim {
