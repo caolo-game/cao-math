@@ -42,17 +42,14 @@ pub fn round_to_nearest(axial: &Point) -> Point {
     // convert to cube
     let [x, z]: [f32; 2] = axial.into();
     let y = -x - z;
+    // round
     let [mut rx, ry, mut rz] = [x.round(), y.round(), z.round()];
     let [dx, dy, dz] = [(rx - x).abs(), (ry - y).abs(), (rz - z).abs()];
-
     if dx > dy && dx > dz {
         rx = -ry - rz;
     } else if dy <= dz {
         rz = -rx - ry;
     }
-
     // convert back to axial
-    let x = rx;
-    let y = rz;
-    Point::new(x, y)
+    Point::new(rx, rz)
 }
