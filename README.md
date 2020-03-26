@@ -9,18 +9,5 @@ See [here](https://rustwasm.github.io/book/game-of-life/setup.html)
 ## Building
 
 ```
-make build
-```
-
-## Install the package for the `www` subproject
-
-```
-make install
-```
-
-## Start the example project
-
-```
-cd www
-yarn start
+wasm-pack build
 ```
