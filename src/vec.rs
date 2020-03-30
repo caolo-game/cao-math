@@ -164,4 +164,5 @@ macro_rules! implvec2d {
     };
 }
 
-implvec2d!(vec2f32, f32, Vec2Float);
+implvec2d!(vec2f32, f32, Vec2F);
+implvec2d!(vec2i32, i32, Vec2I);
