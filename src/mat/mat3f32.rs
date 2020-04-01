@@ -1,4 +1,5 @@
 //! Basic 3 by 3 float matrices
+use crate::vec::vec2f32::Point as P2;
 use crate::vec::vec3f32::Point;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
@@ -54,6 +55,13 @@ impl Proxy {
     #[wasm_bindgen(js_name=scaleMatrix)]
     pub fn scale(a: f32) -> Self {
         Matrix::scale(a).into()
+    }
+
+    #[wasm_bindgen(js_name=translateMatrix)]
+    /// Creates a matrix for the given translation `t`
+    /// Where `b = M*a` equals `a+t`
+    pub fn translate(t: P2) -> Self {
+        Matrix::translate(t.into()).into()
     }
 }
 
@@ -137,6 +145,14 @@ impl Matrix {
                     *x += self.at(i, r) * B.at(c, i);
                 }
             }
+        }
+    }
+
+    /// Creates a matrix for the given translation `t`
+    /// Where `b = M*a` equals `a+t`
+    pub fn translate([x, y]: [f32; 2]) -> Self {
+        Self {
+            values: [[1., 0., x], [0., 1., y], [0., 0., 1.]],
         }
     }
 }

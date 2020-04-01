@@ -56,3 +56,14 @@ fn basic_mat_mat_3_ba() {
         [[18., 36., 54.], [18., 36., 54.], [18., 36., 54.]]
     );
 }
+
+#[wasm_bindgen_test]
+fn test_translation() {
+    let a = Matrix::translate([1., 2.]);
+
+    let p = [0., 0., 1.];
+
+    let res = a.right_prod(p);
+
+    assert_eq!(res, [1., 2., 1.]);
+}
