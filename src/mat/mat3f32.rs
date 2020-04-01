@@ -63,6 +63,14 @@ impl Proxy {
     pub fn translate(t: P2) -> Self {
         Matrix::translate(t.into()).into()
     }
+
+    #[wasm_bindgen(js_name=matrixMul)]
+    /// Multiply two matrices
+    pub fn mul(&self, b: &Proxy) -> Proxy {
+        let mut res = Matrix::default();
+        self.val.mul(&b.val, &mut res);
+        res.into()
+    }
 }
 
 impl From<Matrix> for Proxy {
@@ -136,7 +144,7 @@ impl Matrix {
 
     /// Calculate `A*B=C` where `A` is self
     #[allow(non_snake_case)]
-    pub fn prod(&self, B: &Self, C: &mut Self) {
+    pub fn mul(&self, B: &Self, C: &mut Self) {
         for c in 0..3 {
             for r in 0..3 {
                 let x = C.at_mut(c, r);
