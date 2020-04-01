@@ -1,10 +1,10 @@
-//! Basic 2 by 2 float matrices
-use crate::vec::vec2f32::Point;
+//! Basic 3 by 3 float matrices
+use crate::vec::vec3f32::Point;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use wasm_bindgen::prelude::*;
 
-type Storage = [[f32; 2]; 2];
+type Storage = [[f32; 3]; 3];
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Matrix {
@@ -13,13 +13,13 @@ pub struct Matrix {
     pub values: Storage,
 }
 
-#[wasm_bindgen(js_name=Mat2f)]
+#[wasm_bindgen(js_name=Mat3f)]
 pub struct Proxy {
     #[wasm_bindgen(skip)]
     pub val: Matrix,
 }
 
-#[wasm_bindgen(js_class=Mat2f)]
+#[wasm_bindgen(js_class=Mat3f)]
 impl Proxy {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
@@ -72,8 +72,8 @@ impl From<Storage> for Matrix {
 impl Matrix {
     pub fn scale(a: f32) -> Self {
         let mut mat = Self::default();
-        for i in 0..2 {
-            for j in 0..2 {
+        for i in 0..3 {
+            for j in 0..3 {
                 if i == j {
                     mat.set(i, j, a);
                 }
@@ -87,36 +87,42 @@ impl Matrix {
     }
 
     pub fn at(&self, col: usize, row: usize) -> f32 {
-        assert!(col < 2);
-        assert!(row < 2);
+        assert!(col < 3);
+        assert!(row < 3);
         self.values[row][col]
     }
 
     pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
-        assert!(col < 2);
-        assert!(row < 2);
+        assert!(col < 3);
+        assert!(row < 3);
         &mut self.values[row][col]
     }
 
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
-        assert!(col < 2);
-        assert!(row < 2);
+        assert!(col < 3);
+        assert!(row < 3);
         self.values[row][col] = val;
     }
 
     /// `v*M` where `M` is self
-    pub fn left_prod(&self, v: [f32; 2]) -> [f32; 2] {
-        [
-            v[0] * self.at(0, 0) + v[1] * self.at(0, 1),
-            v[0] * self.at(1, 0) + v[1] * self.at(1, 1),
-        ]
+    pub fn left_prod(&self, v: [f32; 3]) -> [f32; 3] {
+        let mut res = [0.0; 3];
+        for c in 0..3 {
+            for r in 0..3 {
+                res[c] += v[r] * self.at(c, r);
+            }
+        }
+        res
     }
 
     /// `M*v` where `M` is self
-    pub fn right_prod(&self, v: [f32; 2]) -> [f32; 2] {
-        [
-            v[0] * self.at(0, 0) + v[1] * self.at(1, 0),
-            v[0] * self.at(0, 1) + v[1] * self.at(1, 1),
-        ]
+    pub fn right_prod(&self, v: [f32; 3]) -> [f32; 3] {
+        let mut res = [0.0; 3];
+        for r in 0..3 {
+            for c in 0..3 {
+                res[r] += v[c] * self.at(c, r);
+            }
+        }
+        res
     }
 }

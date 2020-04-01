@@ -1,4 +1,3 @@
-//! This module provides wrappings to perform operations on vectors in bulk
 use crate::mat::mat2f32::Proxy;
 use crate::vec::vec2f32::Point;
 use serde_derive::{Deserialize, Serialize};

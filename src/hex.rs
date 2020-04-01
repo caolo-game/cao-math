@@ -3,7 +3,7 @@ use crate::mat::mat2f32::{Matrix, Proxy as Mat2f};
 use crate::vec::vec2f32::Point;
 use wasm_bindgen::prelude::*;
 
-const SQRT3APROX: f32 = 1.73205080757;
+const SQRT3APROX: f32 = 1.732_050_807_57;
 
 #[wasm_bindgen(js_name = axialToPixelMatrixPointy)]
 /// Calculate the pixel position of the hex point represented by axial coordinates by using
