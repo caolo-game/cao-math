@@ -60,7 +60,7 @@ impl Proxy {
     #[wasm_bindgen(js_name=translateMatrix)]
     /// Creates a matrix for the given translation `t`
     /// Where `b = M*a` equals `a+t`
-    pub fn translate(t: P2) -> Self {
+    pub fn translate(t: &P2) -> Self {
         Matrix::translate(t.into()).into()
     }
 
