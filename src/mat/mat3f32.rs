@@ -125,4 +125,18 @@ impl Matrix {
         }
         res
     }
+
+    /// Calculate `A*B=C` where `A` is self
+    #[allow(non_snake_case)]
+    pub fn prod(&self, B: &Self, C: &mut Self) {
+        for c in 0..3 {
+            for r in 0..3 {
+                let x = C.at_mut(c, r);
+                *x = 0.;
+                for i in 0..3 {
+                    *x += self.at(i, r) * B.at(c, i);
+                }
+            }
+        }
+    }
 }

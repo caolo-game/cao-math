@@ -26,3 +26,33 @@ fn basic_right_prod_3by3() {
 
     assert_eq!(res, [5., 2., 3.]);
 }
+
+#[wasm_bindgen_test]
+fn basic_mat_mat_3_ab() {
+    let a = Matrix::from([[1., 2., 3.], [1., 2., 3.], [1., 2., 3.]]);
+    let b = Matrix::from([[5., 6., 7.], [5., 6., 7.], [5., 6., 7.]]);
+
+    let mut c = Matrix::default();
+
+    a.prod(&b, &mut c);
+
+    assert_eq!(
+        c.values,
+        [[30., 36., 42.], [30., 36., 42.], [30., 36., 42.],]
+    );
+}
+
+#[wasm_bindgen_test]
+fn basic_mat_mat_3_ba() {
+    let a = Matrix::from([[5., 6., 7.], [5., 6., 7.], [5., 6., 7.]]);
+    let b = Matrix::from([[1., 2., 3.], [1., 2., 3.], [1., 2., 3.]]);
+
+    let mut c = Matrix::default();
+
+    a.prod(&b, &mut c);
+
+    assert_eq!(
+        c.values,
+        [[18., 36., 54.], [18., 36., 54.], [18., 36., 54.]]
+    );
+}
