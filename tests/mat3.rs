@@ -34,7 +34,7 @@ fn basic_mat_mat_3_ab() {
 
     let mut c = Matrix::default();
 
-    a.prod(&b, &mut c);
+    a.mul(&b, &mut c);
 
     assert_eq!(
         c.values,
@@ -49,7 +49,7 @@ fn basic_mat_mat_3_ba() {
 
     let mut c = Matrix::default();
 
-    a.prod(&b, &mut c);
+    a.mul(&b, &mut c);
 
     assert_eq!(
         c.values,
