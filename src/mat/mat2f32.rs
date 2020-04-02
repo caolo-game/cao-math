@@ -14,13 +14,13 @@ pub struct Matrix {
 }
 
 #[wasm_bindgen(js_name=Mat2f)]
-pub struct Proxy {
+pub struct JsMatrix {
     #[wasm_bindgen(skip)]
     pub val: Matrix,
 }
 
 #[wasm_bindgen(js_class=Mat2f)]
-impl Proxy {
+impl JsMatrix {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         let val = Matrix::default();
@@ -57,7 +57,7 @@ impl Proxy {
     }
 }
 
-impl From<Matrix> for Proxy {
+impl From<Matrix> for JsMatrix {
     fn from(val: Matrix) -> Self {
         Self { val }
     }

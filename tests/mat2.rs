@@ -2,7 +2,7 @@
 //
 #![cfg(target_arch = "wasm32")]
 
-use cao_math::mat::mat2f32::{Matrix, Proxy};
+use cao_math::mat::mat2f32::{JsMatrix, Matrix};
 use cao_math::vec::vec2f32::Point;
 use cao_math::vectorization::Tensor2f;
 use wasm_bindgen_test::*;
@@ -55,7 +55,7 @@ fn basic_right_prod_2by2_tensor() {
     mat.set(0, 1, 0.);
     mat.set(1, 1, 2.);
 
-    let res = tensor.right_prod(&Proxy { val: mat });
+    let res = tensor.right_prod(&JsMatrix { val: mat });
 
     assert_eq!(tensor.data.len(), res.data.len());
 

@@ -1,4 +1,4 @@
-use crate::mat::mat3f32::Proxy;
+use crate::mat::mat3f32::JsMatrix;
 use crate::vec::vec3f32::Point;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -39,14 +39,14 @@ impl Tensor3f {
     }
 
     #[wasm_bindgen(js_name=rightProd)]
-    pub fn right_prod(&self, m: &Proxy) -> Self {
+    pub fn right_prod(&self, m: &JsMatrix) -> Self {
         Self {
             data: self.data.iter().map(|v| m.right_prod(v)).collect(),
         }
     }
 
     #[wasm_bindgen(js_name=leftProd)]
-    pub fn left_prod(&self, m: &Proxy) -> Self {
+    pub fn left_prod(&self, m: &JsMatrix) -> Self {
         Self {
             data: self.data.iter().map(|v| m.left_prod(v)).collect(),
         }
