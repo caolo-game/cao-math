@@ -59,9 +59,11 @@ impl JsMatrix {
 
     #[wasm_bindgen(js_name=asMat3f)]
     /// Create a 3x3 matrix from `this=A`.
+    /// ```txt
     /// | a00 a10 0 |
     /// | a01 a11 0 |
     /// |   0   0 1 |
+    /// ```
     pub fn as_mat3f(&self) -> Mat3f {
         let [[a00, a10], [a01, a11]] = self.val.values.clone();
         Mat3f {
