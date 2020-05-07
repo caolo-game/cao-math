@@ -7,7 +7,7 @@ use wasm_bindgen::prelude::*;
 
 type Storage = [[f32; 3]; 3];
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
 pub struct Matrix {
     // since these are just arrays we can use a 2d array instead of a flat buffer
     // without any problems down the line

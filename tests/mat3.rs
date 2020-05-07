@@ -67,3 +67,16 @@ fn test_translation() {
 
     assert_eq!(res, [1., 2., 1.]);
 }
+
+#[wasm_bindgen_test]
+fn basic_mat_multiplication() {
+    let a = Matrix::translate([5.0, 6.0]);
+    let b = Matrix::scale(8.0);
+
+    let mut c = Matrix::default();
+    a.mul(&b, &mut c);
+
+    let control = Matrix::from([[8., 0., 40.], [0., 8., 48.], [0., 0., 8.]]);
+
+    assert_eq!(c, control);
+}
