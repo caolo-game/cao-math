@@ -3,7 +3,7 @@ test:
 	wasm-pack test --chrome --headless
 
 build:
-	wasm-pack build --scope caolo-game --target web
+	wasm-pack build --scope caolo-game
 
 pack: build
 	wasm-pack pack

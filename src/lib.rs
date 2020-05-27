@@ -3,6 +3,7 @@ pub mod mat;
 pub mod vec;
 pub mod vectorization;
 
+#[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
