@@ -3,6 +3,7 @@ use crate::vec::vec2f32::Point as P2;
 use crate::vec::vec3f32::Point;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
+use std::ops::{Mul, MulAssign};
 use wasm_bindgen::prelude::*;
 
 type Storage = [[f32; 3]; 3];
@@ -162,5 +163,23 @@ impl Matrix {
         Self {
             values: [[1., 0., x], [0., 1., y], [0., 0., 1.]],
         }
+    }
+}
+
+impl Mul<f32> for Matrix {
+    type Output = Self;
+
+    fn mul(mut self, rhs: f32) -> Self::Output {
+        self *= rhs;
+        self
+    }
+}
+
+impl MulAssign<f32> for Matrix {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.values
+            .iter_mut()
+            .flat_map(|x| x.iter_mut())
+            .for_each(|x| *x *= rhs);
     }
 }
