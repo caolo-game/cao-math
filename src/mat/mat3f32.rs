@@ -69,7 +69,7 @@ impl JsMatrix {
     /// Multiply two matrices
     pub fn mul(&self, b: &JsMatrix) -> JsMatrix {
         let mut res = Matrix::default();
-        self.val.mul(&b.val, &mut res);
+        self.val.mat_mul(&b.val, &mut res);
         res.into()
     }
 }
@@ -145,7 +145,7 @@ impl Matrix {
 
     /// Calculate `A*B=C` where `A` is self
     #[allow(non_snake_case)]
-    pub fn mul(&self, B: &Self, C: &mut Self) {
+    pub fn mat_mul(&self, B: &Self, C: &mut Self) {
         for c in 0..3 {
             for r in 0..3 {
                 let x = C.at_mut(c, r);
