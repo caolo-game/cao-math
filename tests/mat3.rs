@@ -34,7 +34,7 @@ fn basic_mat_mat_3_ab() {
 
     let mut c = Matrix::default();
 
-    a.mul(&b, &mut c);
+    a.mat_mul(&b, &mut c);
 
     assert_eq!(
         c.values,
@@ -49,7 +49,7 @@ fn basic_mat_mat_3_ba() {
 
     let mut c = Matrix::default();
 
-    a.mul(&b, &mut c);
+    a.mat_mul(&b, &mut c);
 
     assert_eq!(
         c.values,
@@ -74,7 +74,7 @@ fn basic_mat_multiplication() {
     let b = Matrix::scale(8.0);
 
     let mut c = Matrix::default();
-    a.mul(&b, &mut c);
+    a.mat_mul(&b, &mut c);
 
     let control = Matrix::from([[8., 0., 40.], [0., 8., 48.], [0., 0., 8.]]);
 
