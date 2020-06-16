@@ -65,8 +65,15 @@ impl JsMatrix {
         Matrix::translate(t.into()).into()
     }
 
-    #[wasm_bindgen(js_name=matrixMul)]
+    /// Multiply by scalar value
+    #[wasm_bindgen(js_name=scalarMul)]
+    pub fn scalar_mul(&self, f: f32) -> JsMatrix {
+        let val = self.val.clone() * f;
+        Self { val }
+    }
+
     /// Multiply two matrices
+    #[wasm_bindgen(js_name=matrixMul)]
     pub fn mul(&self, b: &JsMatrix) -> JsMatrix {
         let mut res = Matrix::default();
         self.val.mat_mul(&b.val, &mut res);
