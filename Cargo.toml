@@ -1,6 +1,6 @@
 [package]
 name = "cao-math"
-version = "0.3.9"
+version = "0.3.10"
 authors = ["Daniel Kiss <littlesnorrboy@gmail.com>"]
 edition = "2018"
 license="Apache-2.0"
