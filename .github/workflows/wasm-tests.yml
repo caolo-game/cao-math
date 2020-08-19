@@ -4,6 +4,11 @@ name: Run tests
 
 jobs:
   test:
+    strategy:
+      matrix:
+        browser:
+          - "--chrome"
+          - "--firefox"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,5 +16,4 @@ jobs:
       - name: Install
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-      - run: wasm-pack test --headless --chrome
-      - run: wasm-pack test --headless --firefox
+      - run: wasm-pack test --headless ${{ marix.browser }}
