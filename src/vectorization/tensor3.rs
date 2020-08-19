@@ -1,5 +1,5 @@
 use crate::mat::js_mat3::JsMatrix;
-use crate::vec::vec3::Point;
+use crate::vec::vec3::Vec3;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
@@ -8,7 +8,7 @@ use wasm_bindgen::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Tensor3f {
     #[wasm_bindgen(skip)]
-    pub data: Vec<Point>,
+    pub data: Vec<Vec3>,
 }
 
 #[wasm_bindgen(js_class=Tensor3f)]
@@ -19,12 +19,27 @@ impl Tensor3f {
     }
 
     #[wasm_bindgen]
-    pub fn push(&mut self, v: Point) {
+    pub fn push(&mut self, v: Vec3) {
         self.data.push(v);
     }
 
     #[wasm_bindgen]
-    pub fn remove(&mut self, i: usize) -> Point {
+    pub fn len(&self) -> u64 {
+        self.data.len() as u64
+    }
+
+    #[wasm_bindgen]
+    pub fn get(&self, i: usize) -> Vec3 {
+        self.data[i]
+    }
+
+    #[wasm_bindgen]
+    pub fn set(&mut self, i: usize, v: Vec3) {
+        *self.data.get_mut(i).expect("Invalid index") = v;
+    }
+
+    #[wasm_bindgen]
+    pub fn remove(&mut self, i: usize) -> Vec3 {
         self.data.remove(i)
     }
 
@@ -38,17 +53,15 @@ impl Tensor3f {
             .into_boxed_slice()
     }
 
+    /// Perform `M*v` for each `v` vector in this tensor
     #[wasm_bindgen(js_name=rightProd)]
-    pub fn right_prod(&self, m: &JsMatrix) -> Self {
-        Self {
-            data: self.data.iter().map(|v| m.right_prod(v)).collect(),
-        }
+    pub fn right_prod(&mut self, m: &JsMatrix) {
+        self.data.iter_mut().for_each(|v| *v = m.right_prod(v));
     }
 
+    /// Perform `v*M` for each `v` vector in this tensor
     #[wasm_bindgen(js_name=leftProd)]
-    pub fn left_prod(&self, m: &JsMatrix) -> Self {
-        Self {
-            data: self.data.iter().map(|v| m.left_prod(v)).collect(),
-        }
+    pub fn left_prod(&mut self, m: &JsMatrix) {
+        self.data.iter_mut().for_each(|v| *v = m.left_prod(v));
     }
 }

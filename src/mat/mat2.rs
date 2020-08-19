@@ -1,6 +1,6 @@
 //! Basic 2 by 2 float matrices
 use super::js_mat3::{self, JsMatrix as Mat3f};
-use crate::vec::vec2::Point;
+use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use wasm_bindgen::prelude::*;
@@ -40,16 +40,16 @@ impl JsMatrix {
 
     #[wasm_bindgen(js_name=leftProd)]
     /// Calculate the `a*M` product
-    pub fn left_prod(&self, a: &Point) -> Point {
+    pub fn left_prod(&self, a: &Vec2) -> Vec2 {
         let a = self.val.left_prod(a.into());
-        Point::from(a)
+        Vec2::from(a)
     }
 
     #[wasm_bindgen(js_name=rightProd)]
     /// Calculate the `M*a` product
-    pub fn right_prod(&self, a: &Point) -> Point {
+    pub fn right_prod(&self, a: &Vec2) -> Vec2 {
         let a = self.val.right_prod(a.into());
-        Point::from(a)
+        Vec2::from(a)
     }
 
     #[wasm_bindgen(js_name=scaleMatrix)]
@@ -86,15 +86,9 @@ impl From<Storage> for Matrix {
 
 impl Matrix {
     pub fn scale(a: f32) -> Self {
-        let mut mat = Self::default();
-        for i in 0..2 {
-            for j in 0..2 {
-                if i == j {
-                    mat.set(i, j, a);
-                }
-            }
+        Self {
+            values: [[a, 0.], [0., a]],
         }
-        mat
     }
 
     pub fn swap(&mut self, other: &mut Matrix) {

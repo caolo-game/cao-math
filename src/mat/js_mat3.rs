@@ -1,7 +1,7 @@
 use super::mat3::Matrix;
 use super::mat3_upper::UpperMatrix;
-use crate::vec::vec2::Point as P2;
-use crate::vec::vec3::Point;
+use crate::vec::vec2::Vec2;
+use crate::vec::vec3::Vec3;
 use wasm_bindgen::prelude::*;
 
 pub enum Payload {
@@ -41,22 +41,22 @@ impl JsMatrix {
 
     #[wasm_bindgen(js_name=leftProd)]
     /// Calculate the `a*M` product
-    pub fn left_prod(&self, a: &Point) -> Point {
+    pub fn left_prod(&self, a: &Vec3) -> Vec3 {
         let a = match &self.val {
             Payload::Matrix(mat) => mat.left_prod(a.into()),
             Payload::Upper(_) => unreachable!(),
         };
-        Point::from(a)
+        Vec3::from(a)
     }
 
     #[wasm_bindgen(js_name=rightProd)]
     /// Calculate the `M*a` product
-    pub fn right_prod(&self, a: &Point) -> Point {
+    pub fn right_prod(&self, a: &Vec3) -> Vec3 {
         let a = match &self.val {
             Payload::Matrix(mat) => mat.right_prod(a.into()),
             Payload::Upper(mat) => mat.right_prod(a.into()),
         };
-        Point::from(a)
+        Vec3::from(a)
     }
 
     #[wasm_bindgen(js_name=scaleMatrix)]
@@ -67,7 +67,7 @@ impl JsMatrix {
     #[wasm_bindgen(js_name=translateMatrix)]
     /// Creates a matrix for the given translation `t`
     /// Where `b = M*a` equals `a+t`
-    pub fn translate(t: &P2) -> Self {
+    pub fn translate(t: &Vec2) -> Self {
         Matrix::translate(t.into()).into()
     }
 

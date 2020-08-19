@@ -20,15 +20,9 @@ impl From<Storage> for Matrix {
 
 impl Matrix {
     pub fn scale(a: f32) -> Self {
-        let mut mat = Self::default();
-        for i in 0..3 {
-            for j in 0..3 {
-                if i == j {
-                    mat.set(i, j, a);
-                }
-            }
+        Self {
+            values: [[a, 0., 0.], [0., a, 0.], [0., 0., a]],
         }
-        mat
     }
 
     pub fn swap(&mut self, other: &mut Matrix) {

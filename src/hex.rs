@@ -1,6 +1,6 @@
 //! Hex-Grid utilities
 use crate::mat::mat2::{JsMatrix, Matrix};
-use crate::vec::vec2::Point;
+use crate::vec::vec2::Vec2;
 use wasm_bindgen::prelude::*;
 
 const SQRT3APROX: f32 = 1.732_050_807_57;
@@ -38,7 +38,7 @@ pub fn pixel_to_axial_flat() -> JsMatrix {
 }
 
 #[wasm_bindgen(js_name = roundToNearestHex)]
-pub fn round_to_nearest(axial: &Point) -> Point {
+pub fn round_to_nearest(axial: &Vec2) -> Vec2 {
     // convert to cube
     let [x, z]: [f32; 2] = axial.into();
     let y = -x - z;
@@ -51,5 +51,5 @@ pub fn round_to_nearest(axial: &Point) -> Point {
         rz = -rx - ry;
     }
     // convert back to axial
-    Point::new(rx, rz)
+    Vec2::new(rx, rz)
 }
