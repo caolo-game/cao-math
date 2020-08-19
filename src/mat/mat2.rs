@@ -1,6 +1,6 @@
 //! Basic 2 by 2 float matrices
-use super::mat3f32::JsMatrix as Mat3f;
-use crate::vec::vec2f32::Point;
+use super::js_mat3::{self, JsMatrix as Mat3f};
+use crate::vec::vec2::Point;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use wasm_bindgen::prelude::*;
@@ -67,7 +67,7 @@ impl JsMatrix {
     pub fn as_mat3f(&self) -> Mat3f {
         let [[a00, a10], [a01, a11]] = self.val.values.clone();
         Mat3f {
-            val: [[a00, a10, 0.], [a01, a11, 0.], [0., 0., 1.]].into(),
+            val: js_mat3::Payload::Matrix([[a00, a10, 0.], [a01, a11, 0.], [0., 0., 1.]].into()),
         }
     }
 }

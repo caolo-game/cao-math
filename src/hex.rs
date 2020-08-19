@@ -1,6 +1,6 @@
 //! Hex-Grid utilities
-use crate::mat::mat2f32::{JsMatrix, Matrix};
-use crate::vec::vec2f32::Point;
+use crate::mat::mat2::{JsMatrix, Matrix};
+use crate::vec::vec2::Point;
 use wasm_bindgen::prelude::*;
 
 const SQRT3APROX: f32 = 1.732_050_807_57;

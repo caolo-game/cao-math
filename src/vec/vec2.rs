@@ -1,4 +1,4 @@
-use super::vec3f32;
+use super::vec3;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
@@ -162,8 +162,8 @@ impl Div<f32> for Point {
 impl Point {
     #[wasm_bindgen(js_name=to3dVector)]
     /// Casts `this` to a 3d displacement/vector.
-    pub fn to_3d_vector(&self) -> vec3f32::Point {
-        vec3f32::Point {
+    pub fn to_3d_vector(&self) -> vec3::Point {
+        vec3::Point {
             x: self.x,
             y: self.y,
             z: Default::default(),
@@ -172,8 +172,8 @@ impl Point {
 
     #[wasm_bindgen(js_name=toHomogeneous)]
     /// Casts `this` to a homogenous coordinate representation
-    pub fn to_homogeneous(&self, w: Option<f32>) -> vec3f32::Point {
-        vec3f32::Point {
+    pub fn to_homogeneous(&self, w: Option<f32>) -> vec3::Point {
+        vec3::Point {
             x: self.x,
             y: self.y,
             z: w.unwrap_or_default(),
@@ -182,7 +182,7 @@ impl Point {
 
     #[wasm_bindgen(js_name=fromHomogeneous)]
     /// Cast the Homogenous representation back to 2D
-    pub fn from_homogeneous(point: vec3f32::Point) -> Self {
+    pub fn from_homogeneous(point: vec3::Point) -> Self {
         if point.x.abs() < std::f32::EPSILON {
             // if x is about 0
             Self {

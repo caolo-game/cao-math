@@ -1,5 +1,5 @@
-use crate::mat::mat3f32::JsMatrix;
-use crate::vec::vec3f32::Point;
+use crate::mat::js_mat3::JsMatrix;
+use crate::vec::vec3::Point;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 

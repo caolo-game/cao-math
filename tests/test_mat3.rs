@@ -1,6 +1,6 @@
 #![cfg(target_arch = "wasm32")]
 
-use cao_math::mat::mat3f32::Matrix;
+use cao_math::mat::mat3::Matrix;
 use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);
