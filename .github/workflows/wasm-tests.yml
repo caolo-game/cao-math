@@ -16,4 +16,4 @@ jobs:
       - name: Install
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-      - run: wasm-pack test --headless ${{ marix.browser }}
+      - run: wasm-pack test --headless ${{ matrix.browser }}
