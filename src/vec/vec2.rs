@@ -45,6 +45,11 @@ impl Vec2 {
     pub fn sub(&self, b: &Vec2) -> Self {
         *self - *b
     }
+
+    #[wasm_bindgen]
+    pub fn mul(&self, b: f32) -> Self {
+        *self * b
+    }
 }
 
 impl Into<[f32; 2]> for Vec2 {

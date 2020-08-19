@@ -29,6 +29,15 @@ impl Vec3 {
     }
 
     #[wasm_bindgen]
+    pub fn cross(&self, b: &Vec3) -> Self {
+        Self {
+            x: self.y * b.z - self.z * b.y,
+            y: self.z * b.x - self.x * b.z,
+            z: self.x * b.y - self.y * b.x,
+        }
+    }
+
+    #[wasm_bindgen]
     pub fn add(&self, b: &Vec3) -> Self {
         *self + *b
     }
@@ -36,6 +45,11 @@ impl Vec3 {
     #[wasm_bindgen]
     pub fn sub(&self, b: &Vec3) -> Self {
         *self - *b
+    }
+
+    #[wasm_bindgen]
+    pub fn mul(&self, b: f32) -> Self {
+        *self * b
     }
 }
 
