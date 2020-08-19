@@ -5,7 +5,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, 
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(js_name=Vec2f, inspectable)]
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub struct Vec2 {
     pub x: f32,
     pub y: f32,

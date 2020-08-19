@@ -37,8 +37,8 @@ pub fn pixel_to_axial_flat() -> JsMatrix {
     mat.into()
 }
 
-#[wasm_bindgen(js_name = roundToNearestHex)]
-pub fn round_to_nearest(axial: &Vec2) -> Vec2 {
+#[wasm_bindgen(js_name = roundToNearestAxial)]
+pub fn round_to_nearest_axial(axial: &Vec2) -> Vec2 {
     // convert to cube
     let [x, z]: [f32; 2] = axial.into();
     let y = -x - z;

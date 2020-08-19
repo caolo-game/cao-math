@@ -3,6 +3,7 @@ use super::js_mat3::{self, JsMatrix as Mat3f};
 use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
+use std::ops::{Mul, MulAssign};
 use wasm_bindgen::prelude::*;
 
 type Storage = [[f32; 2]; 2];
@@ -127,5 +128,23 @@ impl Matrix {
             v[0] * self.at(0, 0) + v[1] * self.at(1, 0),
             v[0] * self.at(0, 1) + v[1] * self.at(1, 1),
         ]
+    }
+}
+
+impl Mul<f32> for Matrix {
+    type Output = Self;
+
+    fn mul(mut self, rhs: f32) -> Self::Output {
+        self *= rhs;
+        self
+    }
+}
+
+impl MulAssign<f32> for Matrix {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.values
+            .iter_mut()
+            .flat_map(|x| x.iter_mut())
+            .for_each(|x| *x *= rhs);
     }
 }
