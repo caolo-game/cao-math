@@ -4,7 +4,7 @@
 
 use cao_math::mat::mat2::{JsMatrix, Matrix};
 use cao_math::vec::vec2::Vec2;
-use cao_math::vectorization::Tensor2f;
+use cao_math::tensor::Tensor2f;
 use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);

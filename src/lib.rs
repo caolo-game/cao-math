@@ -1,8 +1,7 @@
-pub mod geometry;
 pub mod hex;
 pub mod mat;
 pub mod vec;
-pub mod vectorization;
+pub mod tensor;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]

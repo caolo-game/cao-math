@@ -2,9 +2,18 @@
 use crate::mat::mat2::{JsMatrix, Matrix};
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;
+use crate::tensor::Tensor3f;
 use wasm_bindgen::prelude::*;
 
 const SQRT3APROX: f32 = 1.732_050_807_57;
+
+/// Converts a point on the hex grid from `cube` representation to `axial` representation
+#[wasm_bindgen(js_name = cubeToAxial)]
+pub fn cube_to_axial(cube: &Vec3) -> Vec2 {
+    let q = cube.x;
+    let r = cube.z;
+    [q, r].into()
+}
 
 /// Converts a point on the hex grid from `axial` representation to `cube` representation
 #[wasm_bindgen(js_name = axialToCube)]
@@ -71,4 +80,24 @@ pub fn round_to_nearest_axial(axial: &Vec2) -> Vec2 {
     }
     // convert back to axial
     Vec2::new(rx, rz)
+}
+
+/// Return a list of points, each point will be inside a hex that is intersected by the segment
+/// between points `a` and `b`.
+/// (The first and the last points in the list are `a` and `b` respectively)
+#[wasm_bindgen(js_name=cubeSegmentPoints)]
+pub fn cube_segment_points(a: &Vec3, b: &Vec3) -> Tensor3f {
+    let n = cube_distance(a, b);
+    let np1 = 1. / (n as f32);
+    let data = (0..=n).map(|i| cube_lerp(a, b, np1 * i as f32)).collect();
+
+    Tensor3f { data }
+}
+
+fn lerp(a: f32, b: f32, t: f32) -> f32 {
+    a + (b - a) * t
+}
+
+fn cube_lerp(a: &Vec3, b: &Vec3, t: f32) -> Vec3 {
+    [lerp(a.x, b.x, t), lerp(a.y, b.y, t), lerp(a.z, b.z, t)].into()
 }
