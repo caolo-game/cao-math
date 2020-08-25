@@ -83,13 +83,12 @@ pub fn round_to_nearest_axial(axial: &Vec2) -> Vec2 {
 }
 
 /// Return a list of points, each point will be inside a hex that is intersected by the segment
-/// between points `a` and `b`.
-/// (The first and the last points in the list are `a` and `b` respectively)
+/// between points `a` and `b`, skipping `a` and `b`.
 #[wasm_bindgen(js_name=cubeSegmentPoints)]
 pub fn cube_segment_points(a: &Vec3, b: &Vec3) -> Tensor3f {
     let n = cube_distance(a, b);
     let np1 = 1. / (n as f32);
-    let data = (0..=n).map(|i| cube_lerp(a, b, np1 * i as f32)).collect();
+    let data = (1..n).map(|i| cube_lerp(a, b, np1 * i as f32)).collect();
 
     Tensor3f { data }
 }
