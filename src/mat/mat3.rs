@@ -3,48 +3,74 @@ use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Mul, MulAssign};
 
-type Storage = [[f32; 3]; 3];
-
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
-pub struct Matrix {
+pub struct Mat33 {
     // since these are just arrays we can use a 2d array instead of a flat buffer
     // without any problems down the line
-    pub values: Storage,
+    //
+    // column major storage
+    pub x_axis: [f32; 3],
+    pub y_axis: [f32; 3],
+    pub w_axis: [f32; 3],
 }
 
-impl From<Storage> for Matrix {
-    fn from(values: Storage) -> Self {
-        Self { values }
+impl From<[[f32; 3]; 3]> for Mat33 {
+    fn from([x_axis, y_axis, w_axis]: [[f32; 3]; 3]) -> Self {
+        Self {
+            x_axis,
+            y_axis,
+            w_axis,
+        }
     }
 }
 
-impl Matrix {
+impl Mat33 {
     pub fn scale(a: f32) -> Self {
         Self {
-            values: [[a, 0., 0.], [0., a, 0.], [0., 0., a]],
+            x_axis: [a, 0., 0.],
+            y_axis: [0., a, 0.],
+            w_axis: [0., 0., a],
         }
     }
 
-    pub fn swap(&mut self, other: &mut Matrix) {
+    pub fn swap(&mut self, other: &mut Mat33) {
         swap(self, other);
+    }
+
+    pub fn axis(&self, col: usize) -> &[f32; 3] {
+        match col {
+            0 => &self.x_axis,
+            1 => &self.y_axis,
+            2 => &self.w_axis,
+            _ => unreachable!(),
+        }
+    }
+
+    pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 3] {
+        match col {
+            0 => &mut self.x_axis,
+            1 => &mut self.y_axis,
+            2 => &mut self.w_axis,
+            _ => unreachable!(),
+        }
     }
 
     pub fn at(&self, col: usize, row: usize) -> f32 {
         assert!(col < 3);
         assert!(row < 3);
-        self.values[row][col]
+        self.axis(col)[row]
     }
 
     pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
         assert!(col < 3);
         assert!(row < 3);
-        &mut self.values[row][col]
+        &mut self.axis_mut(col)[row]
     }
 
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
         assert!(col < 3);
         assert!(row < 3);
-        self.values[row][col] = val;
+        self.axis_mut(col)[row] = val;
     }
 
     /// `v*M` where `M` is self
@@ -87,12 +113,16 @@ impl Matrix {
     /// Where `b = M*a` equals `a+t`
     pub fn translate([x, y]: [f32; 2]) -> Self {
         Self {
-            values: [[1., 0., x], [0., 1., y], [0., 0., 1.]],
+            // note:
+            // what you see is the transposed view of the actual matrix
+            x_axis: [1., 0., 0.],
+            y_axis: [0., 1., 0.],
+            w_axis: [x, y, 1.],
         }
     }
 }
 
-impl Mul<f32> for Matrix {
+impl Mul<f32> for Mat33 {
     type Output = Self;
 
     fn mul(mut self, rhs: f32) -> Self::Output {
@@ -101,11 +131,10 @@ impl Mul<f32> for Matrix {
     }
 }
 
-impl MulAssign<f32> for Matrix {
+impl MulAssign<f32> for Mat33 {
     fn mul_assign(&mut self, rhs: f32) {
-        self.values
-            .iter_mut()
-            .flat_map(|x| x.iter_mut())
-            .for_each(|x| *x *= rhs);
+        self.x_axis.iter_mut().for_each(|x| *x *= rhs);
+        self.y_axis.iter_mut().for_each(|x| *x *= rhs);
+        self.w_axis.iter_mut().for_each(|x| *x *= rhs);
     }
 }

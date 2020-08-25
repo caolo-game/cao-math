@@ -1,8 +1,8 @@
 //! Hex-Grid utilities
-use crate::mat::mat2::{JsMatrix, Matrix};
+use crate::mat::mat2::{JsMat22, Mat22};
+use crate::tensor::Tensor3f;
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;
-use crate::tensor::Tensor3f;
 use wasm_bindgen::prelude::*;
 
 const SQRT3APROX: f32 = 1.732_050_807_57;
@@ -36,32 +36,32 @@ pub fn cube_distance(a: &Vec3, b: &Vec3) -> u32 {
 /// Calculate the pixel position of the hex point represented by axial coordinates by using
 /// `rightProd`. Assumes "pointy top grid".
 #[wasm_bindgen(js_name = axialToPixelMatrixPointy)]
-pub fn axial_to_pixel_mat_pointy() -> JsMatrix {
-    let mat: Matrix = [[SQRT3APROX, SQRT3APROX / 2.0], [0., 3. / 2.]].into();
+pub fn axial_to_pixel_mat_pointy() -> JsMat22 {
+    let mat: Mat22 = [[SQRT3APROX, 0.], [SQRT3APROX / 2.0, 3. / 2.]].into();
     mat.into()
 }
 
 /// Calculate the pixel position of the hex point represented by axial coordinates by using
 /// `rightProd`. Assumes "flat top grid".
 #[wasm_bindgen(js_name = axialToPixelMatrixFlat)]
-pub fn axial_to_pixel_mat_flat() -> JsMatrix {
-    let mat: Matrix = [[3. / 2., 0.], [SQRT3APROX / 2., SQRT3APROX]].into();
+pub fn axial_to_pixel_mat_flat() -> JsMat22 {
+    let mat: Mat22 = [[3. / 2., SQRT3APROX / 2.], [0., SQRT3APROX]].into();
     mat.into()
 }
 
 /// Calculate the axial hex grid position of the pixel by using
 /// `rightProd`. Assumes "pointy top grid".
 #[wasm_bindgen(js_name = pixelToAxialMatrixPointy)]
-pub fn pixel_to_axial_pointy() -> JsMatrix {
-    let mat: Matrix = [[SQRT3APROX / 3., -1. / 3.], [0., 2. / 3.]].into();
+pub fn pixel_to_axial_pointy() -> JsMat22 {
+    let mat: Mat22 = [[SQRT3APROX / 3., 0.], [-1. / 3., 2. / 3.]].into();
     mat.into()
 }
 
 /// Calculate the axial hex grid position of the pixel by using
 /// `rightProd`. Assumes "flat top grid".
 #[wasm_bindgen(js_name = pixelToAxialMatrixFlat)]
-pub fn pixel_to_axial_flat() -> JsMatrix {
-    let mat: Matrix = [[2. / 3., 0.], [-1. / 3., SQRT3APROX / 3.]].into();
+pub fn pixel_to_axial_flat() -> JsMat22 {
+    let mat: Mat22 = [[2. / 3., -1. / 3.], [0., SQRT3APROX / 3.]].into();
     mat.into()
 }
 
