@@ -1,0 +1,6 @@
+[book]
+authors = ["Daniel Kiss"]
+language = "en"
+multilingual = false
+src = "src"
+title = "CaoMath"
