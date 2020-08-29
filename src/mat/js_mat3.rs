@@ -27,15 +27,37 @@ impl JsMat33 {
         self.val.set(col, row, a);
     }
 
-    #[wasm_bindgen(js_name=leftProd)]
     /// Calculate the `a*M` product
+    #[wasm_bindgen(js_name=leftProd)]
+    pub fn left_prod_js(&self, a: &JsValue) -> Result<Vec3, JsValue> {
+        let a: Vec3 = a
+            .into_serde()
+            .map_err(|err| format!("Failed to convert value into a vector {:?}", err))?;
+        let a = self.val.left_prod(a.into());
+        let a = Vec3::from(a);
+        Ok(a)
+    }
+
+    /// Calculate the `M*a` product
+    #[wasm_bindgen(js_name=rightProd)]
+    pub fn right_prod_js(&self, a: &JsValue) -> Result<Vec3, JsValue> {
+        let a: Vec3 = a
+            .into_serde()
+            .map_err(|err| format!("Failed to convert value into a vector {:?}", err))?;
+        let a = self.val.right_prod(a.into());
+        let a = Vec3::from(a);
+        Ok(a)
+    }
+
+    /// Calculate the `a*M` product where `a` is a cao-math vec3
+    #[wasm_bindgen(js_name=leftProdVec)]
     pub fn left_prod(&self, a: &Vec3) -> Vec3 {
         let a = self.val.left_prod(a.into());
         Vec3::from(a)
     }
 
-    #[wasm_bindgen(js_name=rightProd)]
-    /// Calculate the `M*a` product
+    /// Calculate the `M*a` product where `a` is a cao-math vec3
+    #[wasm_bindgen(js_name=rightProdVec)]
     pub fn right_prod(&self, a: &Vec3) -> Vec3 {
         let a = self.val.right_prod(a.into());
         Vec3::from(a)
@@ -46,9 +68,9 @@ impl JsMat33 {
         Mat33::scale(a).into()
     }
 
-    #[wasm_bindgen(js_name=translateMat33)]
     /// Creates a matrix for the given translation `t`
     /// Where `b = M*a` equals `a+t`
+    #[wasm_bindgen(js_name=translateMat33)]
     pub fn translate(t: &Vec2) -> Self {
         Mat33::translate(t.into()).into()
     }

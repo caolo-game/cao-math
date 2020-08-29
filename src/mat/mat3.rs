@@ -33,6 +33,18 @@ impl Mat33 {
         }
     }
 
+    /// Creates a matrix for the given translation `t`
+    /// Where `b = M*a` equals `a+t`
+    pub fn translate([x, y]: [f32; 2]) -> Self {
+        Self {
+            // note:
+            // what you see is the transposed view of the actual matrix
+            x_axis: [1., 0., 0.],
+            y_axis: [0., 1., 0.],
+            w_axis: [x, y, 1.],
+        }
+    }
+
     pub fn swap(&mut self, other: &mut Mat33) {
         swap(self, other);
     }
@@ -109,17 +121,6 @@ impl Mat33 {
         }
     }
 
-    /// Creates a matrix for the given translation `t`
-    /// Where `b = M*a` equals `a+t`
-    pub fn translate([x, y]: [f32; 2]) -> Self {
-        Self {
-            // note:
-            // what you see is the transposed view of the actual matrix
-            x_axis: [1., 0., 0.],
-            y_axis: [0., 1., 0.],
-            w_axis: [x, y, 1.],
-        }
-    }
 }
 
 impl Mul<f32> for Mat33 {
