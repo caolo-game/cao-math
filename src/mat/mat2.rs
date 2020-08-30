@@ -1,81 +1,13 @@
 //! Basic 2 by 2 float matrices
-use super::js_mat3::JsMat33;
-use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Mul, MulAssign};
-use wasm_bindgen::prelude::*;
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Mat22 {
     // column major storage
     pub x_axis: [f32; 2],
     pub y_axis: [f32; 2],
-}
-
-#[wasm_bindgen(js_name=Mat2f)]
-pub struct JsMat22 {
-    #[wasm_bindgen(skip)]
-    pub val: Mat22,
-}
-
-#[wasm_bindgen(js_class=Mat2f)]
-impl JsMat22 {
-    #[wasm_bindgen(constructor)]
-    pub fn new() -> Self {
-        let val = Mat22::default();
-        Self { val }
-    }
-
-    #[wasm_bindgen]
-    pub fn at(&self, col: usize, row: usize) -> f32 {
-        self.val.at(col, row)
-    }
-
-    #[wasm_bindgen]
-    pub fn set(&mut self, col: usize, row: usize, a: f32) {
-        *self.val.at_mut(col, row) = a;
-    }
-
-    #[wasm_bindgen(js_name=leftProd)]
-    /// Calculate the `a*M` product
-    pub fn left_prod(&self, a: &Vec2) -> Vec2 {
-        let a = self.val.left_prod(a.into());
-        Vec2::from(a)
-    }
-
-    #[wasm_bindgen(js_name=rightProd)]
-    /// Calculate the `M*a` product
-    pub fn right_prod(&self, a: &Vec2) -> Vec2 {
-        let a = self.val.right_prod(a.into());
-        Vec2::from(a)
-    }
-
-    #[wasm_bindgen(js_name=scaleMatrix)]
-    pub fn scale(a: f32) -> Self {
-        Mat22::scale(a).into()
-    }
-
-    #[wasm_bindgen(js_name=asMat3f)]
-    /// Create a 3x3 matrix from `this=A`.
-    /// ```txt
-    /// | a00 a10 0 |
-    /// | a01 a11 0 |
-    /// |   0   0 1 |
-    /// ```
-    pub fn as_mat3f(&self) -> JsMat33 {
-        let [a00, a01] = self.val.x_axis;
-        let [a10, a11] = self.val.y_axis;
-        JsMat33 {
-            val: [[a00, a01, 0.], [a10, a11, 0.], [0., 0., 1.]].into(),
-        }
-    }
-}
-
-impl From<Mat22> for JsMat22 {
-    fn from(val: Mat22) -> Self {
-        Self { val }
-    }
 }
 
 impl From<[[f32; 2]; 2]> for Mat22 {
@@ -96,19 +28,19 @@ impl Mat22 {
         swap(self, other);
     }
 
-    pub fn axis(&self, col: usize) -> &[f32;2] {
+    pub fn axis(&self, col: usize) -> &[f32; 2] {
         match col {
             0 => &self.x_axis,
             1 => &self.y_axis,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 
-    pub fn axis_mut(&mut self, col: usize) -> &mut [f32;2] {
+    pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 2] {
         match col {
             0 => &mut self.x_axis,
             1 => &mut self.y_axis,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 

@@ -63,6 +63,11 @@ impl JsMat33 {
         Vec3::from(a)
     }
 
+    #[wasm_bindgen(js_name=rotationMat33)]
+    pub fn rotation(radians: f32) -> Self {
+        Mat33::rotation(radians).into()
+    }
+
     #[wasm_bindgen(js_name=scaleMat33)]
     pub fn scale(a: f32) -> Self {
         Mat33::scale(a).into()

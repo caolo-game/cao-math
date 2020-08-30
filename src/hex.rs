@@ -1,5 +1,6 @@
 //! Hex-Grid utilities
-use crate::mat::mat2::{JsMat22, Mat22};
+use crate::mat::js_mat2::JsMat22;
+use crate::mat::mat2::Mat22;
 use crate::tensor::Tensor3f;
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;

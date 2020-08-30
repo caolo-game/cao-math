@@ -12,6 +12,8 @@ Initialize it in your code.
 
 ```javascript
 import * as caoMath from "@caolo-game/cao-math";
+// register error handling hooks once
+caoMath.init_error_handling();
 
 function foo() {
   const a = new caoMath.Vec2f(42, 13);

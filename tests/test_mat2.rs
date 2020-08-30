@@ -2,9 +2,10 @@
 //
 #![cfg(target_arch = "wasm32")]
 
-use cao_math::mat::mat2::{JsMat22, Mat22};
-use cao_math::vec::vec2::Vec2;
+use cao_math::mat::js_mat2::JsMat22;
+use cao_math::mat::mat2::Mat22;
 use cao_math::tensor::Tensor2f;
+use cao_math::vec::vec2::Vec2;
 use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);

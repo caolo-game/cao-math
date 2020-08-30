@@ -1,4 +1,4 @@
-use crate::mat::mat2::JsMat22;
+use crate::mat::js_mat2::JsMat22;
 use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;

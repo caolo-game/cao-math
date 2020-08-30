@@ -27,9 +27,23 @@ impl From<[[f32; 3]; 3]> for Mat33 {
 impl Mat33 {
     pub fn scale(a: f32) -> Self {
         Self {
+            // note:
+            // what you see is the transposed view of the actual matrix
             x_axis: [a, 0., 0.],
             y_axis: [0., a, 0.],
             w_axis: [0., 0., a],
+        }
+    }
+
+    pub fn rotation(rads: f32) -> Self {
+        let cos = rads.cos();
+        let sin = rads.sin();
+        Self {
+            // note:
+            // what you see is the transposed view of the actual matrix
+            x_axis: [cos, sin, 0.],
+            y_axis: [-sin, cos, 0.],
+            w_axis: [0., 0., 0.],
         }
     }
 
@@ -120,7 +134,6 @@ impl Mat33 {
             }
         }
     }
-
 }
 
 impl Mul<f32> for Mat33 {
