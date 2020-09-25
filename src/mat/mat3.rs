@@ -138,11 +138,35 @@ impl Mat33 {
     }
 }
 
-impl Mul<&Mat33> for &Mat33 {
+impl<'a> Mul<&'a Mat33> for &'a Mat33 {
     type Output = Mat33;
 
-    fn mul(self, rhs: &Mat33) -> Self::Output {
+    fn mul(self, rhs: &'a Mat33) -> Self::Output {
         self.mat_mul(rhs)
+    }
+}
+
+impl<'a> Mul<&'a Mat33> for Mat33 {
+    type Output = Mat33;
+
+    fn mul(self, rhs: &'a Mat33) -> Self::Output {
+        self.mat_mul(rhs)
+    }
+}
+
+impl<'a> Mul<Mat33> for &'a Mat33 {
+    type Output = Mat33;
+
+    fn mul(self, rhs: Mat33) -> Self::Output {
+        self.mat_mul(&rhs)
+    }
+}
+
+impl Mul<Mat33> for Mat33 {
+    type Output = Mat33;
+
+    fn mul(self, rhs: Mat33) -> Self::Output {
+        self.mat_mul(&rhs)
     }
 }
 
