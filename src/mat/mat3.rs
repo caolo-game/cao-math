@@ -43,7 +43,7 @@ impl Mat33 {
             // what you see is the transposed view of the actual matrix
             x_axis: [cos, sin, 0.],
             y_axis: [-sin, cos, 0.],
-            w_axis: [0., 0., 0.],
+            w_axis: [0., 0., 1.],
         }
     }
 
