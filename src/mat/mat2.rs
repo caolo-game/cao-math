@@ -128,7 +128,7 @@ impl AddAssign<&Self> for Mat22 {
             .for_each(|(a, b)| *a += b);
         self.y_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.y_axis.iter())
             .for_each(|(a, b)| *a += b);
     }
 }
@@ -150,7 +150,7 @@ impl SubAssign<&Self> for Mat22 {
             .for_each(|(a, b)| *a -= b);
         self.y_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.y_axis.iter())
             .for_each(|(a, b)| *a -= b);
     }
 }

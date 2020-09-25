@@ -188,11 +188,11 @@ impl AddAssign<&Self> for Mat33 {
             .for_each(|(a, b)| *a += b);
         self.y_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.y_axis.iter())
             .for_each(|(a, b)| *a += b);
         self.w_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.w_axis.iter())
             .for_each(|(a, b)| *a += b);
     }
 }
@@ -214,11 +214,11 @@ impl SubAssign<&Self> for Mat33 {
             .for_each(|(a, b)| *a -= b);
         self.y_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.y_axis.iter())
             .for_each(|(a, b)| *a -= b);
         self.w_axis
             .iter_mut()
-            .zip(rhs.x_axis.iter())
+            .zip(rhs.w_axis.iter())
             .for_each(|(a, b)| *a -= b);
     }
 }
