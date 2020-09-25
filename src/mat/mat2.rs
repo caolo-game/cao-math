@@ -1,7 +1,7 @@
 //! Basic 2 by 2 float matrices
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
-use std::ops::{Mul, MulAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Mat22 {
@@ -92,5 +92,65 @@ impl MulAssign<f32> for Mat22 {
     fn mul_assign(&mut self, rhs: f32) {
         self.x_axis.iter_mut().for_each(|x| *x *= rhs);
         self.y_axis.iter_mut().for_each(|x| *x *= rhs);
+    }
+}
+
+impl Div<f32> for Mat22 {
+    type Output = Self;
+
+    fn div(mut self, rhs: f32) -> Self::Output {
+        self /= rhs;
+        self
+    }
+}
+
+impl DivAssign<f32> for Mat22 {
+    fn div_assign(&mut self, rhs: f32) {
+        self.x_axis.iter_mut().for_each(|x| *x /= rhs);
+        self.y_axis.iter_mut().for_each(|x| *x /= rhs);
+    }
+}
+
+impl Add<&Self> for Mat22 {
+    type Output = Self;
+
+    fn add(mut self, rhs: &Self) -> Self::Output {
+        self += rhs;
+        self
+    }
+}
+
+impl AddAssign<&Self> for Mat22 {
+    fn add_assign(&mut self, rhs: &Self) {
+        self.x_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a += b);
+        self.y_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a += b);
+    }
+}
+
+impl Sub<&Self> for Mat22 {
+    type Output = Self;
+
+    fn sub(mut self, rhs: &Self) -> Self::Output {
+        self -= rhs;
+        self
+    }
+}
+
+impl SubAssign<&Self> for Mat22 {
+    fn sub_assign(&mut self, rhs: &Self) {
+        self.x_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a -= b);
+        self.y_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a -= b);
     }
 }

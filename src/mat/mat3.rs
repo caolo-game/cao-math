@@ -1,7 +1,7 @@
 //! Basic 3 by 3 float matrices
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
-use std::ops::{Mul, MulAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
 pub struct Mat33 {
@@ -150,5 +150,75 @@ impl MulAssign<f32> for Mat33 {
         self.x_axis.iter_mut().for_each(|x| *x *= rhs);
         self.y_axis.iter_mut().for_each(|x| *x *= rhs);
         self.w_axis.iter_mut().for_each(|x| *x *= rhs);
+    }
+}
+
+impl Div<f32> for Mat33 {
+    type Output = Self;
+
+    fn div(mut self, rhs: f32) -> Self::Output {
+        self /= rhs;
+        self
+    }
+}
+
+impl DivAssign<f32> for Mat33 {
+    fn div_assign(&mut self, rhs: f32) {
+        self.x_axis.iter_mut().for_each(|x| *x /= rhs);
+        self.y_axis.iter_mut().for_each(|x| *x /= rhs);
+        self.w_axis.iter_mut().for_each(|x| *x /= rhs);
+    }
+}
+
+
+impl Add<&Self> for Mat33 {
+    type Output = Self;
+
+    fn add(mut self, rhs: &Self) -> Self::Output {
+        self += rhs;
+        self
+    }
+}
+
+impl AddAssign<&Self> for Mat33 {
+    fn add_assign(&mut self, rhs: &Self) {
+        self.x_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a += b);
+        self.y_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a += b);
+        self.w_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a += b);
+    }
+}
+
+impl Sub<&Self> for Mat33 {
+    type Output = Self;
+
+    fn sub(mut self, rhs: &Self) -> Self::Output {
+        self -= rhs;
+        self
+    }
+}
+
+impl SubAssign<&Self> for Mat33 {
+    fn sub_assign(&mut self, rhs: &Self) {
+        self.x_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a -= b);
+        self.y_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a -= b);
+        self.w_axis
+            .iter_mut()
+            .zip(rhs.x_axis.iter())
+            .for_each(|(a, b)| *a -= b);
     }
 }
