@@ -24,32 +24,32 @@ impl Vec3 {
     }
 
     #[wasm_bindgen]
-    pub fn dot(&self, b: &Vec3) -> f32 {
-        self.x * b.x + self.y + b.y + self.z + b.z
+    pub fn dot(&self, other: &Vec3) -> f32 {
+        self.x * other.x + self.y * other.y + self.z * other.z
     }
 
     #[wasm_bindgen]
-    pub fn cross(&self, b: &Vec3) -> Self {
+    pub fn cross(&self, other: &Vec3) -> Self {
         Self {
-            x: self.y * b.z - self.z * b.y,
-            y: self.z * b.x - self.x * b.z,
-            z: self.x * b.y - self.y * b.x,
+            x: self.y * other.z - self.z * other.y,
+            y: self.z * other.x - self.x * other.z,
+            z: self.x * other.y - self.y * other.x,
         }
     }
 
     #[wasm_bindgen]
-    pub fn add(&self, b: &Vec3) -> Self {
-        *self + *b
+    pub fn add(&self, other: &Vec3) -> Self {
+        *self + *other
     }
 
     #[wasm_bindgen]
-    pub fn sub(&self, b: &Vec3) -> Self {
-        *self - *b
+    pub fn sub(&self, other: &Vec3) -> Self {
+        *self - *other
     }
 
     #[wasm_bindgen]
-    pub fn mul(&self, b: f32) -> Self {
-        *self * b
+    pub fn mul(&self, other: f32) -> Self {
+        *self * other
     }
 
     /// Returns a new vector with the same direction but a length of 1

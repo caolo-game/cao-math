@@ -32,23 +32,23 @@ impl Vec2 {
     }
 
     #[wasm_bindgen]
-    pub fn dot(&self, b: &Vec2) -> f32 {
-        self.x * b.x + self.y + b.y
+    pub fn dot(&self, other: &Vec2) -> f32 {
+        self.x * other.x + self.y * other.y
     }
 
     #[wasm_bindgen]
-    pub fn add(&self, b: &Vec2) -> Self {
-        *self + *b
+    pub fn add(&self, other: &Vec2) -> Self {
+        *self + *other
     }
 
     #[wasm_bindgen]
-    pub fn sub(&self, b: &Vec2) -> Self {
-        *self - *b
+    pub fn sub(&self, other: &Vec2) -> Self {
+        *self - *other
     }
 
     #[wasm_bindgen]
-    pub fn mul(&self, b: f32) -> Self {
-        *self * b
+    pub fn mul(&self, other: f32) -> Self {
+        *self * other
     }
 
     /// Returns a new vector with the same direction but a length of 1
