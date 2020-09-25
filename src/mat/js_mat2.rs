@@ -47,13 +47,13 @@ impl JsMat22 {
         Mat22::scale(a).into()
     }
 
-    #[wasm_bindgen(js_name=asMat3f)]
     /// Create a 3x3 matrix from `this=A`.
     /// ```txt
     /// | a00 a10 0 |
     /// | a01 a11 0 |
     /// |   0   0 1 |
     /// ```
+    #[wasm_bindgen(js_name=asMat3f)]
     pub fn as_mat3f(&self) -> JsMat33 {
         let [a00, a01] = self.val.x_axis;
         let [a10, a11] = self.val.y_axis;

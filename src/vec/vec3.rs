@@ -51,6 +51,19 @@ impl Vec3 {
     pub fn mul(&self, b: f32) -> Self {
         *self * b
     }
+
+    /// Returns a new vector with the same direction but a length of 1
+    #[wasm_bindgen]
+    pub fn normalized(&self) -> Self {
+        let lensq = self.dot(self);
+        *self / lensq.sqrt()
+    }
+
+    /// Squared length of this vector
+    #[wasm_bindgen]
+    pub fn len_sq(&self) -> f32 {
+        self.dot(self)
+    }
 }
 
 impl Into<[f32; 3]> for Vec3 {
@@ -148,6 +161,14 @@ impl Mul<f32> for Vec3 {
     fn mul(mut self, a: f32) -> Self {
         self *= a;
         self
+    }
+}
+
+impl Mul<Vec3> for Vec3 {
+    type Output = f32;
+
+    fn mul(self, a: Vec3) -> f32 {
+        self.dot(&a)
     }
 }
 
