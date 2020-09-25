@@ -4,9 +4,16 @@ use crate::vec::vec3::Vec3;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(js_name=Mat3f)]
+#[derive(Debug, Clone)]
 pub struct JsMat33 {
     #[wasm_bindgen(skip)]
     pub val: Mat33,
+}
+
+impl Default for JsMat33 {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[wasm_bindgen(js_class=Mat3f)]
@@ -15,6 +22,18 @@ impl JsMat33 {
     pub fn new() -> Self {
         let val = Default::default();
         Self { val }
+    }
+
+    /// Returns a flat list in row-major order
+    #[wasm_bindgen(js_name=asList)]
+    pub fn as_list(&self) -> Vec<f32> {
+        let mut v = Vec::with_capacity(9);
+        for r in 0..3 {
+            for c in 0..3 {
+                v.push(self.val.at(c, r));
+            }
+        }
+        v
     }
 
     #[wasm_bindgen]

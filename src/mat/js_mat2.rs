@@ -23,6 +23,18 @@ impl JsMat22 {
         self.val.at(col, row)
     }
 
+    /// Returns a flat list in row-major order
+    #[wasm_bindgen(js_name=asList)]
+    pub fn as_list(&self) -> Vec<f32> {
+        let mut v = Vec::with_capacity(9);
+        for r in 0..2 {
+            for c in 0..2 {
+                v.push(self.val.at(c, r));
+            }
+        }
+        v
+    }
+
     #[wasm_bindgen]
     pub fn set(&mut self, col: usize, row: usize, a: f32) {
         *self.val.at_mut(col, row) = a;
