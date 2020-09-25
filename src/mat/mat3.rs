@@ -138,6 +138,14 @@ impl Mat33 {
     }
 }
 
+impl Mul<&Mat33> for &Mat33 {
+    type Output = Mat33;
+
+    fn mul(self, rhs: &Mat33) -> Self::Output {
+        self.mat_mul(rhs)
+    }
+}
+
 impl Mul<f32> for Mat33 {
     type Output = Self;
 
