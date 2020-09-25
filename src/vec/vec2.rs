@@ -63,6 +63,15 @@ impl Vec2 {
     pub fn len_sq(&self) -> f32 {
         self.dot(self)
     }
+
+    /// Rotate the vector around the origin counter-clockwise by `rad` radians.
+    #[wasm_bindgen]
+    pub fn rotate(&mut self, rad: f32) {
+        let c = rad.cos();
+        let s = rad.sin();
+        self.x = self.x * c - self.y * s;
+        self.y = self.x * s + self.y * c;
+    }
 }
 
 impl Into<[f32; 2]> for Vec2 {
