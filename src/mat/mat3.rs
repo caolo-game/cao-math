@@ -123,7 +123,8 @@ impl Mat33 {
 
     /// Calculate `A*B=C` where `A` is self
     #[allow(non_snake_case)]
-    pub fn mat_mul(&self, B: &Self, C: &mut Self) {
+    pub fn mat_mul(&self, B: &Self) -> Self {
+        let mut C = Self::default();
         for c in 0..3 {
             for r in 0..3 {
                 let x = C.at_mut(c, r);
@@ -133,6 +134,7 @@ impl Mat33 {
                 }
             }
         }
+        C
     }
 }
 
@@ -169,7 +171,6 @@ impl DivAssign<f32> for Mat33 {
         self.w_axis.iter_mut().for_each(|x| *x /= rhs);
     }
 }
-
 
 impl Add<&Self> for Mat33 {
     type Output = Self;
