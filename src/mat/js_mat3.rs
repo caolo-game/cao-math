@@ -106,8 +106,7 @@ impl JsMat33 {
     /// Multiply two matrices
     #[wasm_bindgen(js_name=matrixMul)]
     pub fn mul(&self, b: &JsMat33) -> JsMat33 {
-        let mut res = Mat33::default();
-        self.val.mat_mul(&b.val, &mut res);
+        let res = self.val.mat_mul(&b.val);
         res.into()
     }
 }

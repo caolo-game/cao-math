@@ -32,9 +32,7 @@ fn basic_mat_mat_3_ab() {
     let a = Mat33::from([[1., 2., 3.], [1., 2., 3.], [1., 2., 3.]]);
     let b = Mat33::from([[5., 6., 7.], [5., 6., 7.], [5., 6., 7.]]);
 
-    let mut c = Mat33::default();
-
-    a.mat_mul(&b, &mut c);
+    let c = a.mat_mul(&b);
 
     assert_eq!(c.x_axis, [18., 36., 54.]);
     assert_eq!(c.y_axis, [18., 36., 54.]);
@@ -46,9 +44,7 @@ fn basic_mat_mat_3_ba() {
     let a = Mat33::from([[5., 6., 7.], [5., 6., 7.], [5., 6., 7.]]);
     let b = Mat33::from([[1., 2., 3.], [1., 2., 3.], [1., 2., 3.]]);
 
-    let mut c = Mat33::default();
-
-    a.mat_mul(&b, &mut c);
+    let c = a.mat_mul(&b);
 
     assert_eq!(c.x_axis, [30.0, 36.0, 42.0]);
     assert_eq!(c.y_axis, [30.0, 36.0, 42.0]);
@@ -71,8 +67,7 @@ fn basic_mat_multiplication() {
     let a = Mat33::translate([5.0, 6.0]);
     let b = Mat33::scale(8.0);
 
-    let mut c = Mat33::default();
-    a.mat_mul(&b, &mut c);
+    let c = a.mat_mul(&b);
 
     let control = Mat33 {
         x_axis: [8.0, 0.0, 0.0],
