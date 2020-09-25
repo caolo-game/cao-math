@@ -28,11 +28,9 @@ impl JsMat33 {
     #[wasm_bindgen(js_name=asList)]
     pub fn as_list(&self) -> Vec<f32> {
         let mut v = Vec::with_capacity(9);
-        for c in 0..3 {
-            for r in 0..3 {
-                v.push(self.val.at(c, r));
-            }
-        }
+        v.extend_from_slice(&self.val.x_axis);
+        v.extend_from_slice(&self.val.y_axis);
+        v.extend_from_slice(&self.val.w_axis);
         v
     }
 
