@@ -72,6 +72,13 @@ impl Vec2 {
         self.x = self.x * c - self.y * s;
         self.y = self.x * s + self.y * c;
     }
+
+    /// Returns the angle between the two vectors in radians
+    #[wasm_bindgen(js_name=angleBetween)]
+    pub fn angle_between(&self, other: &Vec2) -> f32 {
+        let cos = self.dot(other) / (self.len_sq().sqrt() * other.len_sq().sqrt());
+        cos.acos()
+    }
 }
 
 impl Into<[f32; 2]> for Vec2 {
