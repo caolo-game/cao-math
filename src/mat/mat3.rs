@@ -1,16 +1,20 @@
 //! Basic 3 by 3 float matrices
+use crate::vec::vec2::Vec2;
+use crate::vec::vec3::Vec3;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use wasm_bindgen::prelude::*;
 
+/// 3 by 3 column major matrix
+#[wasm_bindgen(js_class=Mat3f)]
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
 pub struct Mat33 {
-    // since these are just arrays we can use a 2d array instead of a flat buffer
-    // without any problems down the line
-    //
-    // column major storage
+    #[wasm_bindgen(skip)]
     pub x_axis: [f32; 3],
+    #[wasm_bindgen(skip)]
     pub y_axis: [f32; 3],
+    #[wasm_bindgen(skip)]
     pub w_axis: [f32; 3],
 }
 
@@ -24,7 +28,39 @@ impl From<[[f32; 3]; 3]> for Mat33 {
     }
 }
 
+#[wasm_bindgen(js_class=Mat3f)]
 impl Mat33 {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    #[wasm_bindgen(js_name=xAxis)]
+    pub fn x_axis(&self) -> Vec3 {
+        self.x_axis.into()
+    }
+
+    #[wasm_bindgen(js_name=yAxis)]
+    pub fn y_axis(&self) -> Vec3 {
+        self.y_axis.into()
+    }
+
+    #[wasm_bindgen(js_name=wAxis)]
+    pub fn w_axis(&self) -> Vec3 {
+        self.w_axis.into()
+    }
+
+    /// Returns a flat list in column-major order
+    #[wasm_bindgen(js_name=asList)]
+    pub fn as_list(&self) -> Vec<f32> {
+        let mut v = Vec::with_capacity(9);
+        v.extend_from_slice(&self.x_axis);
+        v.extend_from_slice(&self.y_axis);
+        v.extend_from_slice(&self.w_axis);
+        v
+    }
+
+    #[wasm_bindgen]
     pub fn scale(a: f32) -> Self {
         Self {
             // note:
@@ -35,6 +71,7 @@ impl Mat33 {
         }
     }
 
+    #[wasm_bindgen]
     pub fn rotation(rads: f32) -> Self {
         let cos = rads.cos();
         let sin = rads.sin();
@@ -49,7 +86,8 @@ impl Mat33 {
 
     /// Creates a matrix for the given translation `t`
     /// Where `b = M*a` equals `a+t`
-    pub fn translate([x, y]: [f32; 2]) -> Self {
+    #[wasm_bindgen]
+    pub fn translate(Vec2 { x, y }: Vec2) -> Self {
         Self {
             // note:
             // what you see is the transposed view of the actual matrix
@@ -59,40 +97,30 @@ impl Mat33 {
         }
     }
 
+    #[wasm_bindgen]
     pub fn swap(&mut self, other: &mut Mat33) {
         swap(self, other);
     }
 
-    pub fn axis(&self, col: usize) -> &[f32; 3] {
-        match col {
+    #[wasm_bindgen]
+    pub fn axis(&self, col: usize) -> Vec3 {
+        let axis = match col {
             0 => &self.x_axis,
             1 => &self.y_axis,
             2 => &self.w_axis,
             _ => unreachable!(),
-        }
+        };
+        axis.clone().into()
     }
 
-    pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 3] {
-        match col {
-            0 => &mut self.x_axis,
-            1 => &mut self.y_axis,
-            2 => &mut self.w_axis,
-            _ => unreachable!(),
-        }
-    }
-
+    #[wasm_bindgen]
     pub fn at(&self, col: usize, row: usize) -> f32 {
         assert!(col < 3);
         assert!(row < 3);
         self.axis(col)[row]
     }
 
-    pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
-        assert!(col < 3);
-        assert!(row < 3);
-        &mut self.axis_mut(col)[row]
-    }
-
+    #[wasm_bindgen]
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
         assert!(col < 3);
         assert!(row < 3);
@@ -100,30 +128,33 @@ impl Mat33 {
     }
 
     /// `v*M` where `M` is self
-    pub fn left_prod(&self, v: [f32; 3]) -> [f32; 3] {
+    #[wasm_bindgen]
+    pub fn left_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for c in 0..3 {
             for r in 0..3 {
                 res[c] += v[r] * self.at(c, r);
             }
         }
-        res
+        res.into()
     }
 
     /// `M*v` where `M` is self
-    pub fn right_prod(&self, v: [f32; 3]) -> [f32; 3] {
+    #[wasm_bindgen]
+    pub fn right_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for r in 0..3 {
             for c in 0..3 {
                 res[r] += v[c] * self.at(c, r);
             }
         }
-        res
+        res.into()
     }
 
     /// Calculate `A*B=C` where `A` is self
+    #[wasm_bindgen]
     #[allow(non_snake_case)]
-    pub fn mat_mul(&self, B: &Self) -> Self {
+    pub fn mat_mul(&self, B: &Mat33) -> Mat33 {
         let mut C = Self::default();
         for c in 0..3 {
             for r in 0..3 {
@@ -135,6 +166,23 @@ impl Mat33 {
             }
         }
         C
+    }
+}
+
+impl Mat33 {
+    pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 3] {
+        match col {
+            0 => &mut self.x_axis,
+            1 => &mut self.y_axis,
+            2 => &mut self.w_axis,
+            _ => unreachable!(),
+        }
+    }
+
+    pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
+        assert!(col < 3);
+        assert!(row < 3);
+        &mut self.axis_mut(col)[row]
     }
 }
 

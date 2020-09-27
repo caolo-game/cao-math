@@ -10,10 +10,10 @@ fn basic_left_prod_3by3() {
     let mut mat = Mat33::scale(1.);
     mat.set(1, 0, 2.);
 
-    let p = [1., 2., 3.];
-    let res = mat.left_prod(p);
+    let p = [1., 2., 3.].into();
+    let res = mat.left_prod(&p);
 
-    assert_eq!(res, [1., 4., 3.]);
+    assert_eq!(res, [1., 4., 3.].into());
 }
 
 #[wasm_bindgen_test]
@@ -21,10 +21,10 @@ fn basic_right_prod_3by3() {
     let mut mat = Mat33::scale(1.);
     mat.set(1, 0, 2.);
 
-    let p = [1., 2., 3.];
-    let res = mat.right_prod(p);
+    let p = [1., 2., 3.].into();
+    let res = mat.right_prod(&p);
 
-    assert_eq!(res, [5., 2., 3.]);
+    assert_eq!(res, [5., 2., 3.].into());
 }
 
 #[wasm_bindgen_test]
@@ -53,18 +53,18 @@ fn basic_mat_mat_3_ba() {
 
 #[wasm_bindgen_test]
 fn test_translation() {
-    let a = Mat33::translate([1., 2.]);
+    let a = Mat33::translate([1., 2.].into());
 
-    let p = [0., 0., 1.];
+    let p = [0., 0., 1.].into();
 
-    let res = a.right_prod(p);
+    let res = a.right_prod(&p);
 
-    assert_eq!(res, [1., 2., 1.]);
+    assert_eq!(res, [1., 2., 1.].into());
 }
 
 #[wasm_bindgen_test]
 fn basic_mat_multiplication() {
-    let a = Mat33::translate([5.0, 6.0]);
+    let a = Mat33::translate([5.0, 6.0].into());
     let b = Mat33::scale(8.0);
 
     let c = a.mat_mul(&b);

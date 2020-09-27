@@ -4,7 +4,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, 
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(js_name=Vec3f, inspectable)]
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub struct Vec3 {
     pub x: f32,
     pub y: f32,
@@ -96,7 +96,7 @@ impl Index<usize> for Vec3 {
         match index {
             0 => &self.x,
             1 => &self.y,
-            3 => &self.z,
+            2 => &self.z,
             _ => panic!("Vec3 index {} is out of range", index),
         }
     }
@@ -107,7 +107,7 @@ impl IndexMut<usize> for Vec3 {
         match index {
             0 => &mut self.x,
             1 => &mut self.y,
-            3 => &mut self.z,
+            2 => &mut self.z,
             _ => panic!("Vec3 index {} is out of range", index),
         }
     }

@@ -1,4 +1,4 @@
-use crate::mat::js_mat3::JsMat33;
+use crate::mat::mat3::Mat33;
 use crate::vec::vec3::Vec3;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -55,13 +55,13 @@ impl Tensor3f {
 
     /// Perform `M*v` for each `v` vector in this tensor
     #[wasm_bindgen(js_name=rightProd)]
-    pub fn right_prod(&mut self, m: &JsMat33) {
+    pub fn right_prod(&mut self, m: &Mat33) {
         self.data.iter_mut().for_each(|v| *v = m.right_prod(v));
     }
 
     /// Perform `v*M` for each `v` vector in this tensor
     #[wasm_bindgen(js_name=leftProd)]
-    pub fn left_prod(&mut self, m: &JsMat33) {
+    pub fn left_prod(&mut self, m: &Mat33) {
         self.data.iter_mut().for_each(|v| *v = m.left_prod(v));
     }
 }
