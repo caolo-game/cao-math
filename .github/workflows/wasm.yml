@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-      - run: make pack
+      - run: wasm-pack build --scope caolo-game -d out/pkg --dev
       - name: Upload pkg
         uses: actions/upload-artifact@v2
         with:
