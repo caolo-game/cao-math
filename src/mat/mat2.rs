@@ -1,5 +1,7 @@
 //! Basic 2 by 2 float matrices
+use crate::mat::mat3::Mat3f;
 use crate::vec::vec2::Vec2;
+use crate::vec::vec3::Vec3;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
@@ -41,6 +43,42 @@ impl Mat2f {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Default::default()
+    }
+
+    /// Converts `this` to a 3 by 3 matrix
+    ///
+    /// __Layout__
+    ///
+    /// ```txt
+    /// | this11    this12    last_column1 |
+    /// | this21    this22    last_column2 |
+    /// | last_row1 last_row2 last_column3 |
+    /// ```
+    ///
+    /// __Defaults__
+    ///
+    /// `last_column` defaults to (0, 0, 1)
+    ///
+    /// `last_row` defaults to (0, 0)
+    ///
+    /// ```txt
+    /// | this11    this12    0 |
+    /// | this21    this22    0 |
+    /// | 0         0         1 |
+    /// ```
+    #[wasm_bindgen(js_name=toMat3)]
+    pub fn to_mat3(&self, last_column: Option<Vec3>, last_row: Option<Vec2>) -> Mat3f {
+        let [x1, x2] = self.x_axis;
+        let [y1, y2] = self.y_axis;
+
+        let last = last_row.unwrap_or_else(|| Vec2::new(0., 0.));
+        Mat3f {
+            x_axis: [x1, x2, last.x],
+            y_axis: [y1, y2, last.y],
+            w_axis: last_column
+                .map(|v| v.into())
+                .unwrap_or_else(|| [0., 0., 1.]),
+        }
     }
 
     #[wasm_bindgen]
