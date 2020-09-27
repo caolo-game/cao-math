@@ -50,9 +50,10 @@ jobs:
         run: |
           cd docs
           npx typedoc --inputFiles ../out/pkg/cao_math.d.ts
-
-      - name: Upload docs
-        uses: actions/upload-artifact@v2
+      - name: Deploy 🚀
+        if: ${{ (github.ref == 'master') }}
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          name: docs
-          path: out/docs
+            ACCESS_TOKEN: ${{ secrets.ACCESS_KEY }}
+            BRANCH: gh-pages # The branch the action should deploy to.
+            FOLDER: out/docs # The folder the action should deploy.
