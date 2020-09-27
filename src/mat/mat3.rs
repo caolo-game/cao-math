@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 /// 3 by 3 column major matrix
 #[wasm_bindgen(js_class=Mat3f)]
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
-pub struct Mat33 {
+pub struct Mat3f {
     #[wasm_bindgen(skip)]
     pub x_axis: [f32; 3],
     #[wasm_bindgen(skip)]
@@ -18,7 +18,7 @@ pub struct Mat33 {
     pub w_axis: [f32; 3],
 }
 
-impl From<[[f32; 3]; 3]> for Mat33 {
+impl From<[[f32; 3]; 3]> for Mat3f {
     fn from([x_axis, y_axis, w_axis]: [[f32; 3]; 3]) -> Self {
         Self {
             x_axis,
@@ -29,7 +29,7 @@ impl From<[[f32; 3]; 3]> for Mat33 {
 }
 
 #[wasm_bindgen(js_class=Mat3f)]
-impl Mat33 {
+impl Mat3f {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self::default()
@@ -98,7 +98,7 @@ impl Mat33 {
     }
 
     #[wasm_bindgen]
-    pub fn swap(&mut self, other: &mut Mat33) {
+    pub fn swap(&mut self, other: &mut Mat3f) {
         swap(self, other);
     }
 
@@ -128,7 +128,7 @@ impl Mat33 {
     }
 
     /// `v*M` where `M` is self
-    #[wasm_bindgen]
+    #[wasm_bindgen(js_name=leftProd)]
     pub fn left_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for c in 0..3 {
@@ -140,7 +140,7 @@ impl Mat33 {
     }
 
     /// `M*v` where `M` is self
-    #[wasm_bindgen]
+    #[wasm_bindgen(js_name=rightProd)]
     pub fn right_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for r in 0..3 {
@@ -152,9 +152,9 @@ impl Mat33 {
     }
 
     /// Calculate `A*B=C` where `A` is self
-    #[wasm_bindgen]
+    #[wasm_bindgen(js_name=matMul)]
     #[allow(non_snake_case)]
-    pub fn mat_mul(&self, B: &Mat33) -> Mat33 {
+    pub fn mat_mul(&self, B: &Mat3f) -> Mat3f {
         let mut C = Self::default();
         for c in 0..3 {
             for r in 0..3 {
@@ -169,7 +169,7 @@ impl Mat33 {
     }
 }
 
-impl Mat33 {
+impl Mat3f {
     pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 3] {
         match col {
             0 => &mut self.x_axis,
@@ -186,39 +186,39 @@ impl Mat33 {
     }
 }
 
-impl<'a> Mul<&'a Mat33> for &'a Mat33 {
-    type Output = Mat33;
+impl<'a> Mul<&'a Mat3f> for &'a Mat3f {
+    type Output = Mat3f;
 
-    fn mul(self, rhs: &'a Mat33) -> Self::Output {
+    fn mul(self, rhs: &'a Mat3f) -> Self::Output {
         self.mat_mul(rhs)
     }
 }
 
-impl<'a> Mul<&'a Mat33> for Mat33 {
-    type Output = Mat33;
+impl<'a> Mul<&'a Mat3f> for Mat3f {
+    type Output = Mat3f;
 
-    fn mul(self, rhs: &'a Mat33) -> Self::Output {
+    fn mul(self, rhs: &'a Mat3f) -> Self::Output {
         self.mat_mul(rhs)
     }
 }
 
-impl<'a> Mul<Mat33> for &'a Mat33 {
-    type Output = Mat33;
+impl<'a> Mul<Mat3f> for &'a Mat3f {
+    type Output = Mat3f;
 
-    fn mul(self, rhs: Mat33) -> Self::Output {
+    fn mul(self, rhs: Mat3f) -> Self::Output {
         self.mat_mul(&rhs)
     }
 }
 
-impl Mul<Mat33> for Mat33 {
-    type Output = Mat33;
+impl Mul<Mat3f> for Mat3f {
+    type Output = Mat3f;
 
-    fn mul(self, rhs: Mat33) -> Self::Output {
+    fn mul(self, rhs: Mat3f) -> Self::Output {
         self.mat_mul(&rhs)
     }
 }
 
-impl Mul<f32> for Mat33 {
+impl Mul<f32> for Mat3f {
     type Output = Self;
 
     fn mul(mut self, rhs: f32) -> Self::Output {
@@ -227,7 +227,7 @@ impl Mul<f32> for Mat33 {
     }
 }
 
-impl MulAssign<f32> for Mat33 {
+impl MulAssign<f32> for Mat3f {
     fn mul_assign(&mut self, rhs: f32) {
         self.x_axis.iter_mut().for_each(|x| *x *= rhs);
         self.y_axis.iter_mut().for_each(|x| *x *= rhs);
@@ -235,7 +235,7 @@ impl MulAssign<f32> for Mat33 {
     }
 }
 
-impl Div<f32> for Mat33 {
+impl Div<f32> for Mat3f {
     type Output = Self;
 
     fn div(mut self, rhs: f32) -> Self::Output {
@@ -244,7 +244,7 @@ impl Div<f32> for Mat33 {
     }
 }
 
-impl DivAssign<f32> for Mat33 {
+impl DivAssign<f32> for Mat3f {
     fn div_assign(&mut self, rhs: f32) {
         self.x_axis.iter_mut().for_each(|x| *x /= rhs);
         self.y_axis.iter_mut().for_each(|x| *x /= rhs);
@@ -252,7 +252,7 @@ impl DivAssign<f32> for Mat33 {
     }
 }
 
-impl Add<&Self> for Mat33 {
+impl Add<&Self> for Mat3f {
     type Output = Self;
 
     fn add(mut self, rhs: &Self) -> Self::Output {
@@ -261,7 +261,7 @@ impl Add<&Self> for Mat33 {
     }
 }
 
-impl AddAssign<&Self> for Mat33 {
+impl AddAssign<&Self> for Mat3f {
     fn add_assign(&mut self, rhs: &Self) {
         self.x_axis
             .iter_mut()
@@ -278,7 +278,7 @@ impl AddAssign<&Self> for Mat33 {
     }
 }
 
-impl Sub<&Self> for Mat33 {
+impl Sub<&Self> for Mat3f {
     type Output = Self;
 
     fn sub(mut self, rhs: &Self) -> Self::Output {
@@ -287,7 +287,7 @@ impl Sub<&Self> for Mat33 {
     }
 }
 
-impl SubAssign<&Self> for Mat33 {
+impl SubAssign<&Self> for Mat3f {
     fn sub_assign(&mut self, rhs: &Self) {
         self.x_axis
             .iter_mut()

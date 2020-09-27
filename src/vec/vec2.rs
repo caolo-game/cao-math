@@ -59,7 +59,7 @@ impl Vec2 {
     }
 
     /// Squared length of this vector
-    #[wasm_bindgen]
+    #[wasm_bindgen(js_name=lenSq)]
     pub fn len_sq(&self) -> f32 {
         self.dot(self)
     }

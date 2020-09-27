@@ -8,19 +8,19 @@ use wasm_bindgen::prelude::*;
 /// 2 by 2 column major matrix
 #[wasm_bindgen(js_name=Mat2f)]
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct Mat22 {
+pub struct Mat2f {
     #[wasm_bindgen(skip)]
     pub x_axis: [f32; 2],
     #[wasm_bindgen(skip)]
     pub y_axis: [f32; 2],
 }
 
-impl From<[[f32; 2]; 2]> for Mat22 {
+impl From<[[f32; 2]; 2]> for Mat2f {
     fn from([x_axis, y_axis]: [[f32; 2]; 2]) -> Self {
         Self { x_axis, y_axis }
     }
 }
-impl Mat22 {
+impl Mat2f {
     pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 2] {
         match col {
             0 => &mut self.x_axis,
@@ -37,7 +37,7 @@ impl Mat22 {
 }
 
 #[wasm_bindgen(js_name=Mat2f)]
-impl Mat22 {
+impl Mat2f {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Default::default()
@@ -52,7 +52,7 @@ impl Mat22 {
     }
 
     #[wasm_bindgen]
-    pub fn swap(&mut self, other: &mut Mat22) {
+    pub fn swap(&mut self, other: &mut Mat2f) {
         swap(self, other);
     }
 
@@ -99,7 +99,7 @@ impl Mat22 {
     }
 }
 
-impl Mul<f32> for Mat22 {
+impl Mul<f32> for Mat2f {
     type Output = Self;
 
     fn mul(mut self, rhs: f32) -> Self::Output {
@@ -108,14 +108,14 @@ impl Mul<f32> for Mat22 {
     }
 }
 
-impl MulAssign<f32> for Mat22 {
+impl MulAssign<f32> for Mat2f {
     fn mul_assign(&mut self, rhs: f32) {
         self.x_axis.iter_mut().for_each(|x| *x *= rhs);
         self.y_axis.iter_mut().for_each(|x| *x *= rhs);
     }
 }
 
-impl Div<f32> for Mat22 {
+impl Div<f32> for Mat2f {
     type Output = Self;
 
     fn div(mut self, rhs: f32) -> Self::Output {
@@ -124,14 +124,14 @@ impl Div<f32> for Mat22 {
     }
 }
 
-impl DivAssign<f32> for Mat22 {
+impl DivAssign<f32> for Mat2f {
     fn div_assign(&mut self, rhs: f32) {
         self.x_axis.iter_mut().for_each(|x| *x /= rhs);
         self.y_axis.iter_mut().for_each(|x| *x /= rhs);
     }
 }
 
-impl Add<&Self> for Mat22 {
+impl Add<&Self> for Mat2f {
     type Output = Self;
 
     fn add(mut self, rhs: &Self) -> Self::Output {
@@ -140,7 +140,7 @@ impl Add<&Self> for Mat22 {
     }
 }
 
-impl AddAssign<&Self> for Mat22 {
+impl AddAssign<&Self> for Mat2f {
     fn add_assign(&mut self, rhs: &Self) {
         self.x_axis
             .iter_mut()
@@ -153,7 +153,7 @@ impl AddAssign<&Self> for Mat22 {
     }
 }
 
-impl Sub<&Self> for Mat22 {
+impl Sub<&Self> for Mat2f {
     type Output = Self;
 
     fn sub(mut self, rhs: &Self) -> Self::Output {
@@ -162,7 +162,7 @@ impl Sub<&Self> for Mat22 {
     }
 }
 
-impl SubAssign<&Self> for Mat22 {
+impl SubAssign<&Self> for Mat2f {
     fn sub_assign(&mut self, rhs: &Self) {
         self.x_axis
             .iter_mut()

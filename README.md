@@ -13,3 +13,15 @@ See [here](https://rustwasm.github.io/book/game-of-life/setup.html)
 ```
 wasm-pack build
 ```
+
+## Documentation
+
+### Install Deps
+
+- [NodeJS](https://nodejs.org/en/)
+- `cd docs`
+- `npm install`
+
+### Building
+
+- `make docs`
