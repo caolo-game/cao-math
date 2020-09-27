@@ -1,4 +1,4 @@
-use crate::mat::mat2::Mat22;
+use crate::mat::mat2::Mat2f;
 use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -54,12 +54,12 @@ impl Tensor2f {
     }
 
     #[wasm_bindgen(js_name=rightProd)]
-    pub fn right_prod(&mut self, m: &Mat22) {
+    pub fn right_prod(&mut self, m: &Mat2f) {
         self.data.iter_mut().for_each(|v| *v = m.right_prod(*v));
     }
 
     #[wasm_bindgen(js_name=leftProd)]
-    pub fn left_prod(&mut self, m: &Mat22) {
+    pub fn left_prod(&mut self, m: &Mat2f) {
         self.data.iter_mut().for_each(|v| *v = m.left_prod(*v));
     }
 }

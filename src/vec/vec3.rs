@@ -55,12 +55,12 @@ impl Vec3 {
     /// Returns a new vector with the same direction but a length of 1
     #[wasm_bindgen]
     pub fn normalized(&self) -> Self {
-        let lensq = self.dot(self);
-        *self / lensq.sqrt()
+        let len_sq = self.dot(self);
+        *self / len_sq.sqrt()
     }
 
     /// Squared length of this vector
-    #[wasm_bindgen]
+    #[wasm_bindgen(js_name=lenSq)]
     pub fn len_sq(&self) -> f32 {
         self.dot(self)
     }

@@ -2,7 +2,7 @@
 //
 #![cfg(target_arch = "wasm32")]
 
-use cao_math::mat::mat2::Mat22;
+use cao_math::mat::mat2::Mat2f;
 use cao_math::tensor::Tensor2f;
 use cao_math::vec::vec2::Vec2;
 use wasm_bindgen_test::*;
@@ -13,7 +13,7 @@ wasm_bindgen_test_configure!(run_in_browser);
 fn basic_right_prod_2by2() {
     const SQRT3APROX: f32 = 1.73205080757;
 
-    let mut mat = Mat22::default();
+    let mut mat = Mat2f::default();
     mat.set(0, 0, SQRT3APROX);
     mat.set(1, 0, SQRT3APROX / 2.0);
     mat.set(0, 1, 0.0);
@@ -29,7 +29,7 @@ fn basic_right_prod_2by2() {
 fn basic_left_prod_2by2() {
     const SQRT3APROX: f32 = 1.73205080757;
 
-    let mut mat = Mat22::default();
+    let mut mat = Mat2f::default();
     mat.set(0, 0, SQRT3APROX);
     mat.set(1, 0, SQRT3APROX / 2.0);
     mat.set(0, 1, 0.0);
@@ -48,7 +48,7 @@ fn basic_right_prod_2by2_tensor() {
         tensor.push(Vec2::new(1., 2.));
     }
 
-    let mat = Mat22::scale(2.0);
+    let mat = Mat2f::scale(2.0);
 
     let expected = tensor
         .data

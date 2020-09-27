@@ -1,5 +1,5 @@
 //! Hex-Grid utilities
-use crate::mat::mat2::Mat22;
+use crate::mat::mat2::Mat2f;
 use crate::tensor::Tensor3f;
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;
@@ -36,32 +36,32 @@ pub fn cube_distance(a: &Vec3, b: &Vec3) -> u32 {
 /// Calculate the pixel position of the hex point represented by axial coordinates by using
 /// `rightProd`. Assumes "pointy top grid".
 #[wasm_bindgen(js_name = axialToPixelMatrixPointy)]
-pub fn axial_to_pixel_mat_pointy() -> Mat22 {
-    let mat: Mat22 = [[SQRT3APROX, 0.], [SQRT3APROX / 2.0, 3. / 2.]].into();
+pub fn axial_to_pixel_mat_pointy() -> Mat2f {
+    let mat: Mat2f = [[SQRT3APROX, 0.], [SQRT3APROX / 2.0, 3. / 2.]].into();
     mat.into()
 }
 
 /// Calculate the pixel position of the hex point represented by axial coordinates by using
 /// `rightProd`. Assumes "flat top grid".
 #[wasm_bindgen(js_name = axialToPixelMatrixFlat)]
-pub fn axial_to_pixel_mat_flat() -> Mat22 {
-    let mat: Mat22 = [[3. / 2., SQRT3APROX / 2.], [0., SQRT3APROX]].into();
+pub fn axial_to_pixel_mat_flat() -> Mat2f {
+    let mat: Mat2f = [[3. / 2., SQRT3APROX / 2.], [0., SQRT3APROX]].into();
     mat.into()
 }
 
 /// Calculate the axial hex grid position of the pixel by using
 /// `rightProd`. Assumes "pointy top grid".
 #[wasm_bindgen(js_name = pixelToAxialMatrixPointy)]
-pub fn pixel_to_axial_pointy() -> Mat22 {
-    let mat: Mat22 = [[SQRT3APROX / 3., 0.], [-1. / 3., 2. / 3.]].into();
+pub fn pixel_to_axial_pointy() -> Mat2f {
+    let mat: Mat2f = [[SQRT3APROX / 3., 0.], [-1. / 3., 2. / 3.]].into();
     mat.into()
 }
 
 /// Calculate the axial hex grid position of the pixel by using
 /// `rightProd`. Assumes "flat top grid".
 #[wasm_bindgen(js_name = pixelToAxialMatrixFlat)]
-pub fn pixel_to_axial_flat() -> Mat22 {
-    let mat: Mat22 = [[2. / 3., -1. / 3.], [0., SQRT3APROX / 3.]].into();
+pub fn pixel_to_axial_flat() -> Mat2f {
+    let mat: Mat2f = [[2. / 3., -1. / 3.], [0., SQRT3APROX / 3.]].into();
     mat.into()
 }
 
