@@ -1,6 +1,6 @@
 use super::mat2::Mat22;
 
-use super::js_mat3::JsMat33;
+use super::mat3::Mat33;
 use crate::vec::vec2::Vec2;
 use wasm_bindgen::prelude::*;
 
@@ -63,12 +63,10 @@ impl JsMat22 {
     /// |   0   0 1 |
     /// ```
     #[wasm_bindgen(js_name=asMat3f)]
-    pub fn as_mat3f(&self) -> JsMat33 {
+    pub fn as_mat3f(&self) -> Mat33 {
         let [a00, a01] = self.val.x_axis;
         let [a10, a11] = self.val.y_axis;
-        JsMat33 {
-            val: [[a00, a01, 0.], [a10, a11, 0.], [0., 0., 1.]].into(),
-        }
+        [[a00, a01, 0.], [a10, a11, 0.], [0., 0., 1.]].into()
     }
 }
 
