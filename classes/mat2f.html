@@ -72,6 +72,9 @@
 				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="mat2f.html#swap" class="tsd-kind-icon">swap</a>
 				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="mat2f.html#tomat3" class="tsd-kind-icon">to<wbr>Mat3</a>
+				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a href="mat2f.html#scale" class="tsd-kind-icon">scale</a>
 				</li>
@@ -161,6 +164,7 @@
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat2f.html#rightprod" class="tsd-kind-icon">right<wbr>Prod</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat2f.html#set" class="tsd-kind-icon">set</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat2f.html#swap" class="tsd-kind-icon">swap</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat2f.html#tomat3" class="tsd-kind-icon">to<wbr>Mat3</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="mat2f.html#scale" class="tsd-kind-icon">scale</a></li>
 						</ul>
 					</section>
@@ -199,7 +203,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:90</li>
+								<li>Defined in cao_math.d.ts:117</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -227,7 +231,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:84</li>
+								<li>Defined in cao_math.d.ts:111</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -269,7 +273,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:102</li>
+								<li>Defined in cao_math.d.ts:129</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -297,7 +301,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:108</li>
+								<li>Defined in cao_math.d.ts:135</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -325,7 +329,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:96</li>
+								<li>Defined in cao_math.d.ts:123</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -358,7 +362,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:79</li>
+								<li>Defined in cao_math.d.ts:106</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -375,6 +379,47 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="tomat3" class="tsd-anchor"></a>
+				<h3>to<wbr>Mat3</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">to<wbr>Mat3<span class="tsd-signature-symbol">(</span>last_column<span class="tsd-signature-symbol">?: </span><a href="vec3f.html" class="tsd-signature-type">Vec3f</a>, last_row<span class="tsd-signature-symbol">?: </span><a href="vec2f.html" class="tsd-signature-type">Vec2f</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="mat3f.html" class="tsd-signature-type">Mat3f</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in cao_math.d.ts:97</li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Converts <code>this</code> to a 3 by 3 matrix</p>
+							</div>
+							<p><strong>Layout</strong></p>
+							<pre><code class="language-txt">| this11    this12    last_column1 |
+| this21    this22    last_column2 |
+| last_row1 last_row2 last_column3 |</code></pre>
+							<p><strong>Defaults</strong></p>
+							<p><code>last_column</code> defaults to (0, 0, 1)</p>
+							<p><code>last_row</code> defaults to (0, 0)</p>
+							<pre><code class="language-txt">| this11    this12    0 |
+| this21    this22    0 |
+| 0         0         1 |</code></pre>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> last_column: <a href="vec3f.html" class="tsd-signature-type">Vec3f</a></h5>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> last_row: <a href="vec2f.html" class="tsd-signature-type">Vec2f</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="mat3f.html" class="tsd-signature-type">Mat3f</a></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 				<a name="scale" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagStatic">Static</span> scale</h3>
@@ -385,7 +430,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:75</li>
+								<li>Defined in cao_math.d.ts:102</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
