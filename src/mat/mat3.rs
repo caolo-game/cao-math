@@ -71,6 +71,7 @@ impl Mat3f {
         }
     }
 
+    /// Returns a 2d rotation matrix, rotatig with `a` radians counter-clockwise around the origin
     #[wasm_bindgen]
     pub fn rotation(rads: f32) -> Self {
         let cos = rads.cos();
