@@ -50,6 +50,9 @@ jobs:
         run: |
           cd docs
           npx typedoc --inputFiles ../out/pkg/cao_math.d.ts
+
+      - name: Ref
+        run: echo ${{ github.ref }}
       - name: Deploy 🚀
         if: github.ref == 'master'
         uses: JamesIves/github-pages-deploy-action@releases/v3
