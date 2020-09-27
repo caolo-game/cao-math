@@ -11,7 +11,7 @@ See [here](https://rustwasm.github.io/book/game-of-life/setup.html)
 ## Building
 
 ```
-wasm-pack build
+make build
 ```
 
 ## Documentation

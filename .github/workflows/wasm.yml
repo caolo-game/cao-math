@@ -1,0 +1,58 @@
+on: [push, pull_request]
+
+name: Test & Doc
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        browser:
+          - "--chrome"
+          - "--firefox"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: wasm-pack test --headless ${{ matrix.browser }}
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: make pack
+      - name: Upload pkg
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg
+          path: out/pkg
+
+  build-docs:
+    needs: [package, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Install
+        run: |
+          cd docs
+          npm install
+      - name: Download pkg
+        uses: actions/download-artifact@v2
+        with:
+          name: pkg
+          path: out/pkg
+      - name: Build docs
+        run: |
+          cd docs
+          npx typedoc --inputFiles ../out/pkg/cao_math.d.ts
+
+      - name: Upload docs
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: out/docs
