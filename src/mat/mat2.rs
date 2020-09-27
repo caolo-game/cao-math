@@ -1,12 +1,17 @@
 //! Basic 2 by 2 float matrices
+use crate::vec::vec2::Vec2;
 use serde_derive::{Deserialize, Serialize};
 use std::mem::swap;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use wasm_bindgen::prelude::*;
 
+/// 2 by 2 column major matrix
+#[wasm_bindgen(js_name=Mat2f)]
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Mat22 {
-    // column major storage
+    #[wasm_bindgen(skip)]
     pub x_axis: [f32; 2],
+    #[wasm_bindgen(skip)]
     pub y_axis: [f32; 2],
 }
 
@@ -15,27 +20,7 @@ impl From<[[f32; 2]; 2]> for Mat22 {
         Self { x_axis, y_axis }
     }
 }
-
 impl Mat22 {
-    pub fn scale(a: f32) -> Self {
-        Self {
-            x_axis: [a, 0.],
-            y_axis: [0., a],
-        }
-    }
-
-    pub fn swap(&mut self, other: &mut Mat22) {
-        swap(self, other);
-    }
-
-    pub fn axis(&self, col: usize) -> &[f32; 2] {
-        match col {
-            0 => &self.x_axis,
-            1 => &self.y_axis,
-            _ => unreachable!(),
-        }
-    }
-
     pub fn axis_mut(&mut self, col: usize) -> &mut [f32; 2] {
         match col {
             0 => &mut self.x_axis,
@@ -44,16 +29,47 @@ impl Mat22 {
         }
     }
 
-    pub fn at(&self, col: usize, row: usize) -> f32 {
-        assert!(col < 2);
-        assert!(row < 2);
-        self.axis(col)[row]
-    }
-
     pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
         assert!(col < 2);
         assert!(row < 2);
         &mut self.axis_mut(col)[row]
+    }
+}
+
+#[wasm_bindgen(js_name=Mat2f)]
+impl Mat22 {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Default::default()
+    }
+
+    #[wasm_bindgen]
+    pub fn scale(a: f32) -> Self {
+        Self {
+            x_axis: [a, 0.],
+            y_axis: [0., a],
+        }
+    }
+
+    #[wasm_bindgen]
+    pub fn swap(&mut self, other: &mut Mat22) {
+        swap(self, other);
+    }
+
+    #[wasm_bindgen]
+    pub fn axis(&self, col: usize) -> Vec2 {
+        match col {
+            0 => self.x_axis.into(),
+            1 => self.y_axis.into(),
+            _ => unreachable!(),
+        }
+    }
+
+    #[wasm_bindgen]
+    pub fn at(&self, col: usize, row: usize) -> f32 {
+        assert!(col < 2);
+        assert!(row < 2);
+        self.axis(col)[row]
     }
 
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
@@ -63,19 +79,23 @@ impl Mat22 {
     }
 
     /// `v*M` where `M` is self
-    pub fn left_prod(&self, v: [f32; 2]) -> [f32; 2] {
+    #[wasm_bindgen(js_name=leftProd)]
+    pub fn left_prod(&self, v: Vec2) -> Vec2 {
         [
             v[0] * self.at(0, 0) + v[1] * self.at(0, 1),
             v[0] * self.at(1, 0) + v[1] * self.at(1, 1),
         ]
+        .into()
     }
 
     /// `M*v` where `M` is self
-    pub fn right_prod(&self, v: [f32; 2]) -> [f32; 2] {
+    #[wasm_bindgen(js_name=rightProd)]
+    pub fn right_prod(&self, v: Vec2) -> Vec2 {
         [
             v[0] * self.at(0, 0) + v[1] * self.at(1, 0),
             v[0] * self.at(0, 1) + v[1] * self.at(1, 1),
         ]
+        .into()
     }
 }
 
