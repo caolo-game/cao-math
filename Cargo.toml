@@ -7,6 +7,9 @@ license="MIT"
 repository="https://github.com/caolo-game/cao-math"
 description="Simple linear algebra and [Hexagonal grid](https://www.redblobgames.com/grids/hexagons/#hex-to-pixel) implementations to help the Cao-Lo project."
 
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Oz", "--enable-mutable-globals"]
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 

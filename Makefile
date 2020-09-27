@@ -8,7 +8,7 @@ build:
 	wasm-pack build --scope caolo-game -d out/pkg
 
 pack: build
-	wasm-pack pack -d out/pkg
+	wasm-pack pack out/pkg
 
 publish: pack
 	cd out/pkg && npm publish --access=public
