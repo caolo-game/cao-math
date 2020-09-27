@@ -51,7 +51,7 @@ jobs:
           cd docs
           npx typedoc --inputFiles ../out/pkg/cao_math.d.ts
       - name: Deploy 🚀
-        if: ${{ (github.ref == 'master') }}
+        if: github.ref == 'master'
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
             ACCESS_TOKEN: ${{ secrets.ACCESS_KEY }}
