@@ -73,7 +73,7 @@ fn basic_mat_multiplication() {
     let control = Mat3f {
         x_axis: [8.0, 0.0, 0.0],
         y_axis: [0.0, 8.0, 0.0],
-        w_axis: [40.0, 48.0, 8.0],
+        w_axis: [5.0, 6.0, 1.0],
     };
 
     assert_eq!(c, control);
@@ -90,4 +90,52 @@ fn determinant() {
     let d = a.det();
 
     assert!((d - -306.).abs() < EPSILON, "{}", d);
+}
+
+#[wasm_bindgen_test]
+fn inverse_returns_none_is_non_invertible() {
+    let mat = Mat3f {
+        x_axis: [0., 4., 2.],
+        y_axis: [0., -2., 8.],
+        w_axis: [0., 5., 7.],
+    };
+
+    assert!(
+        mat.inverted().is_none(),
+        "matrix with 0 row is not invertible"
+    );
+
+    let mat = Mat3f {
+        x_axis: [0., 0., 0.],
+        y_axis: [1., -2., 8.],
+        w_axis: [2., 5., 7.],
+    };
+
+    assert!(
+        mat.inverted().is_none(),
+        "matrix with 0 column is not invertible"
+    );
+}
+
+#[wasm_bindgen_test]
+fn inverse_returns_correct_result() {
+    let mat = Mat3f {
+        x_axis: [0., -3., -2.],
+        y_axis: [1., -4., -2.],
+        w_axis: [-3., 4., 1.],
+    }
+    .transposed();
+
+    let exp = Mat3f {
+        x_axis: [4., -5., -2.],
+        y_axis: [5., -6., -2.],
+        w_axis: [-8., 9., 3.],
+    }
+    .transposed();
+
+    let inv = mat.inverted().expect("expected invert to succeed");
+
+    assert_eq!(inv, exp);
+
+    assert_eq!(inv * mat, Mat3f::identity())
 }

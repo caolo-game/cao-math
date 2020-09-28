@@ -88,6 +88,20 @@ impl Vec2 {
         let cos = self.dot(other) / (self.len_sq().sqrt() * other.len_sq().sqrt());
         cos.acos()
     }
+
+    /// Returns the orientation of point __C__ in respect to the directed line __AB__.
+    ///
+    /// If the __orient2d(a, b, c)__ > 0, then __C__ lies to the left.
+    ///
+    /// If the __orient2d(a, b, c)__ < 0, then __C__ lies to the right.
+    ///
+    /// If the __orient2d(a, b, c)__ == 0, then __C__ lies to on the line.
+    ///
+    /// The absolute value of the returning number is double the area of the triangle __ABC__
+    #[wasm_bindgen]
+    pub fn orient2d(a: &Vec2, b: &Vec2, c: &Vec2) -> f32 {
+        ((a.x - c.x) * (b.y - c.y)) - ((a.y - c.y) * (b.x - c.x))
+    }
 }
 
 impl Into<[f32; 2]> for Vec2 {

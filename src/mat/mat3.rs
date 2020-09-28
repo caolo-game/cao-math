@@ -60,6 +60,41 @@ impl Mat3f {
         v
     }
 
+    /// Returns a new matrix which is the inverse of this.
+    ///
+    /// If `this` is not invertible then __null__ is returned.
+    #[wasm_bindgen]
+    pub fn inverted(&self) -> Option<Mat3f> {
+        let det = self.det();
+        if det == 0.0 {
+            return None;
+        }
+
+        let u = Vec3::from(self.x_axis);
+        let v = Vec3::from(self.y_axis);
+        let w = Vec3::from(self.w_axis);
+
+        let dev_inv = 1.0 / det;
+        let x_axis = v.cross(&w) * dev_inv;
+        let y_axis = w.cross(&u) * dev_inv;
+        let w_axis = u.cross(&v) * dev_inv;
+
+        let mat = Self {
+            x_axis: x_axis.into(),
+            y_axis: y_axis.into(),
+            w_axis: w_axis.into(),
+        }
+        .transposed();
+
+        Some(mat)
+    }
+
+    /// Returns the identity matrix
+    #[wasm_bindgen]
+    pub fn identity() -> Mat3f {
+        Mat3f::scale(1.)
+    }
+
     #[wasm_bindgen]
     pub fn scale(a: f32) -> Self {
         Self {
@@ -67,7 +102,7 @@ impl Mat3f {
             // what you see is the transposed view of the actual matrix
             x_axis: [a, 0., 0.],
             y_axis: [0., a, 0.],
-            w_axis: [0., 0., a],
+            w_axis: [0., 0., 1.],
         }
     }
 
@@ -95,6 +130,16 @@ impl Mat3f {
             x_axis: [1., 0., 0.],
             y_axis: [0., 1., 0.],
             w_axis: [x, y, 1.],
+        }
+    }
+
+    /// Returns a new matrix that is the transponent of this
+    #[wasm_bindgen]
+    pub fn transposed(&self) -> Self {
+        Self {
+            x_axis: [self.x_axis[0], self.y_axis[0], self.w_axis[0]],
+            y_axis: [self.x_axis[1], self.y_axis[1], self.w_axis[1]],
+            w_axis: [self.x_axis[2], self.y_axis[2], self.w_axis[2]],
         }
     }
 

@@ -18,6 +18,16 @@ impl Vec3 {
         Self { x, y, z }
     }
 
+    /// Calculates the 'scalar triple' product
+    /// (sometimes referred to as __[uvw]__) of the 3 given vectors.
+    ///
+    /// This is equivalent to __det([u v w])__ or
+    /// __(u cross v) dot w__
+    #[wasm_bindgen(js_name=scalarTriple)]
+    pub fn scalar_triple(u: &Vec3, v: &Vec3, w: &Vec3) -> f32 {
+        u.cross(v).dot(w)
+    }
+
     #[wasm_bindgen]
     pub fn swap(&mut self, other: &mut Vec3) {
         swap(self, other);
@@ -73,7 +83,6 @@ impl Vec3 {
     pub fn len(&self) -> f32 {
         self.dot(self).sqrt()
     }
-
 }
 
 impl Into<[f32; 3]> for Vec3 {
