@@ -10,8 +10,18 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-/// Init the error handling of the library
-pub fn init_error_handling() {
+extern "C" {
+    #[wasm_bindgen(js_namespace=console)]
+    fn debug(s: &str);
+}
+
+/// Initialize the global state of the library.
+///
+/// Clients should not have to call this method.
+#[wasm_bindgen(start)]
+pub fn _start() {
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
+
+    debug("CaoMath initialized successfully");
 }
