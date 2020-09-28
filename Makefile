@@ -3,6 +3,7 @@
 test:
 	wasm-pack test --firefox --headless
 	wasm-pack test --chrome --headless
+	wasm-pack test --node
 
 build:
 	wasm-pack build --scope caolo-game -d out/pkg
