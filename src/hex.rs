@@ -1,6 +1,6 @@
 //! Hex-Grid utilities
 use crate::mat::mat2::Mat2f;
-use crate::tensor::Tensor3f;
+use crate::array::Array3f;
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;
 use wasm_bindgen::prelude::*;
@@ -85,12 +85,12 @@ pub fn round_to_nearest_axial(axial: &Vec2) -> Vec2 {
 /// Return a list of points, each point will be inside a hex that is intersected by the segment
 /// between points `a` and `b`, skipping `a` and `b`.
 #[wasm_bindgen(js_name=cubeSegmentPoints)]
-pub fn cube_segment_points(a: &Vec3, b: &Vec3) -> Tensor3f {
+pub fn cube_segment_points(a: &Vec3, b: &Vec3) -> Array3f {
     let n = cube_distance(a, b);
     let np1 = 1. / (n as f32);
     let data = (1..n).map(|i| cube_lerp(a, b, np1 * i as f32)).collect();
 
-    Tensor3f { data }
+    Array3f { data }
 }
 
 fn lerp(a: f32, b: f32, t: f32) -> f32 {

@@ -1,7 +1,7 @@
 //! This module provides wrappings to perform operations on vectors in bulk
 
-mod tensor2;
-mod tensor3;
+mod array2;
+mod array3;
 
-pub use tensor2::*;
-pub use tensor3::*;
+pub use array2::*;
+pub use array3::*;

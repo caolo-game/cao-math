@@ -1,6 +1,6 @@
 pub mod hex;
 pub mod mat;
-pub mod tensor;
+pub mod array;
 pub mod vec;
 
 #[cfg(feature = "wee_alloc")]

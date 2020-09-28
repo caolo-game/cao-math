@@ -4,15 +4,15 @@ use serde_derive::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
 /// Collection of 3d float vectors
-#[wasm_bindgen(js_name=Tensor3f, inspectable)]
+#[wasm_bindgen(js_name=Array3f, inspectable)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Tensor3f {
+pub struct Array3f {
     #[wasm_bindgen(skip)]
     pub data: Vec<Vec3>,
 }
 
-#[wasm_bindgen(js_class=Tensor3f)]
-impl Tensor3f {
+#[wasm_bindgen(js_class=Array3f)]
+impl Array3f {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self { data: Vec::new() }

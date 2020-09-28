@@ -3,7 +3,7 @@
 #![cfg(target_arch = "wasm32")]
 
 use cao_math::mat::mat2::Mat2f;
-use cao_math::tensor::Tensor2f;
+use cao_math::array::Array2f;
 use cao_math::vec::vec2::Vec2;
 use wasm_bindgen_test::*;
 
@@ -41,7 +41,7 @@ fn basic_left_prod_2by2() {
 
 #[wasm_bindgen_test]
 fn basic_right_prod_2by2_tensor() {
-    let mut tensor = Tensor2f::new();
+    let mut tensor = Array2f::new();
     for _ in 0..512 {
         tensor.push(Vec2::new(1., 2.));
     }
