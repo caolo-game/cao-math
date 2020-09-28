@@ -65,13 +65,13 @@ impl Array3f {
             .into_boxed_slice()
     }
 
-    /// Perform `M*v` for each `v` vector in this tensor
+    /// Perform `M*v` for each vector `v` in this array
     #[wasm_bindgen(js_name=rightProd)]
     pub fn right_prod(&mut self, m: &Mat3f) {
         self.data.iter_mut().for_each(|v| *v = m.right_prod(v));
     }
 
-    /// Perform `v*M` for each `v` vector in this tensor
+    /// Perform `v*M` for each vector `v` in this array
     #[wasm_bindgen(js_name=leftProd)]
     pub fn left_prod(&mut self, m: &Mat3f) {
         self.data.iter_mut().for_each(|v| *v = m.left_prod(v));

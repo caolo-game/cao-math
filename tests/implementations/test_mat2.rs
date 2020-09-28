@@ -40,15 +40,15 @@ fn basic_left_prod_2by2() {
 }
 
 #[wasm_bindgen_test]
-fn basic_right_prod_2by2_tensor() {
-    let mut tensor = Array2f::new();
+fn basic_right_prod_2by2_array() {
+    let mut arr = Array2f::new();
     for _ in 0..512 {
-        tensor.push(Vec2::new(1., 2.));
+        arr.push(Vec2::new(1., 2.));
     }
 
     let mat = Mat2f::scale(2.0);
 
-    let expected = tensor
+    let expected = arr
         .data
         .iter()
         .map(|v| {
@@ -57,9 +57,9 @@ fn basic_right_prod_2by2_tensor() {
         })
         .collect::<Vec<_>>();
 
-    tensor.right_prod(&mat);
+    arr.right_prod(&mat);
 
-    for (v1, v2) in tensor.data.iter().zip(expected.iter()) {
+    for (v1, v2) in arr.data.iter().zip(expected.iter()) {
         let [x1, y1]: [f32; 2] = v1.into();
         let [x2, y2]: [f32; 2] = *v2;
 
