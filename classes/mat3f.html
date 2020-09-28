@@ -55,6 +55,9 @@
 					<a href="mat3f.html#constructor" class="tsd-kind-icon">constructor</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="mat3f.html#almostequal" class="tsd-kind-icon">almost<wbr>Equal</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="mat3f.html#aslist" class="tsd-kind-icon">as<wbr>List</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -187,6 +190,7 @@
 					<section class="tsd-index-section ">
 						<h3>Methods</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat3f.html#almostequal" class="tsd-kind-icon">almost<wbr>Equal</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat3f.html#aslist" class="tsd-kind-icon">as<wbr>List</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat3f.html#at" class="tsd-kind-icon">at</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="mat3f.html#axis" class="tsd-kind-icon">axis</a></li>
@@ -223,7 +227,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:146</li>
+								<li>Defined in cao_math.d.ts:176</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="mat3f.html" class="tsd-signature-type">Mat3f</a></h4>
@@ -234,6 +238,37 @@
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Methods</h2>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="almostequal" class="tsd-anchor"></a>
+				<h3>almost<wbr>Equal</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">almost<wbr>Equal<span class="tsd-signature-symbol">(</span>other<span class="tsd-signature-symbol">: </span><a href="mat3f.html" class="tsd-signature-type">Mat3f</a>, epsilon<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in cao_math.d.ts:285</li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Check if the two matrices are equal, within <code>epsilon</code> range.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>other: <a href="mat3f.html" class="tsd-signature-type">Mat3f</a></h5>
+							</li>
+							<li>
+								<h5>epsilon: <span class="tsd-signature-type">number</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 				<a name="aslist" class="tsd-anchor"></a>
 				<h3>as<wbr>List</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -243,7 +278,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:166</li>
+								<li>Defined in cao_math.d.ts:196</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -265,7 +300,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:216</li>
+								<li>Defined in cao_math.d.ts:249</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -293,10 +328,13 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:210</li>
+								<li>Defined in cao_math.d.ts:243</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Returns axis 0, 1 or 2. Panics if <code>col</code> is greater than 2.</p>
+							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -318,7 +356,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:245</li>
+								<li>Defined in cao_math.d.ts:278</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -340,7 +378,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:146</li>
+								<li>Defined in cao_math.d.ts:176</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -357,7 +395,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:173</li>
+								<li>Defined in cao_math.d.ts:203</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -380,7 +418,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:228</li>
+								<li>Defined in cao_math.d.ts:261</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -408,7 +446,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:240</li>
+								<li>Defined in cao_math.d.ts:273</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -436,7 +474,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:234</li>
+								<li>Defined in cao_math.d.ts:267</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -464,7 +502,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:222</li>
+								<li>Defined in cao_math.d.ts:255</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -497,10 +535,13 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:205</li>
+								<li>Defined in cao_math.d.ts:237</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Swaps the matrices in place</p>
+							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -524,7 +565,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:201</li>
+								<li>Defined in cao_math.d.ts:232</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -546,7 +587,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:161</li>
+								<li>Defined in cao_math.d.ts:191</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -565,7 +606,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:153</li>
+								<li>Defined in cao_math.d.ts:183</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -584,7 +625,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:157</li>
+								<li>Defined in cao_math.d.ts:187</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -603,7 +644,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:178</li>
+								<li>Defined in cao_math.d.ts:208</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -625,12 +666,12 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:189</li>
+								<li>Defined in cao_math.d.ts:220</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Returns a 2d rotation matrix, rotatig with <code>a</code> radians counter-clockwise around the origin</p>
+								<p>Returns a 2D rotation matrix, rotatig with <code>rads</code> radians counter-clockwise around the origin</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -653,10 +694,13 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:183</li>
+								<li>Defined in cao_math.d.ts:214</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>2D scale transformation matrix.</p>
+							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -678,7 +722,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:196</li>
+								<li>Defined in cao_math.d.ts:227</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
