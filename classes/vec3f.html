@@ -88,6 +88,9 @@
 					<a href="vec3f.html#free" class="tsd-kind-icon">free</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="vec3f.html#len" class="tsd-kind-icon">len</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="vec3f.html#lensq" class="tsd-kind-icon">len<wbr>Sq</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -101,6 +104,9 @@
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="vec3f.html#swap" class="tsd-kind-icon">swap</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a href="vec3f.html#scalartriple" class="tsd-kind-icon">scalar<wbr>Triple</a>
 				</li>
 			</ul>
 		</li>
@@ -171,11 +177,13 @@
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#cross" class="tsd-kind-icon">cross</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#dot" class="tsd-kind-icon">dot</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#free" class="tsd-kind-icon">free</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#len" class="tsd-kind-icon">len</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#lensq" class="tsd-kind-icon">len<wbr>Sq</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#mul" class="tsd-kind-icon">mul</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#normalized" class="tsd-kind-icon">normalized</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#sub" class="tsd-kind-icon">sub</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="vec3f.html#swap" class="tsd-kind-icon">swap</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="vec3f.html#scalartriple" class="tsd-kind-icon">scalar<wbr>Triple</a></li>
 						</ul>
 					</section>
 				</div>
@@ -193,7 +201,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:399</li>
+								<li>Defined in cao_math.d.ts:464</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -227,7 +235,7 @@
 				<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in cao_math.d.ts:448</li>
+						<li>Defined in cao_math.d.ts:533</li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -243,7 +251,7 @@
 				<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in cao_math.d.ts:452</li>
+						<li>Defined in cao_math.d.ts:537</li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -259,7 +267,7 @@
 				<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in cao_math.d.ts:456</li>
+						<li>Defined in cao_math.d.ts:541</li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -282,7 +290,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:424</li>
+								<li>Defined in cao_math.d.ts:501</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -307,7 +315,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:419</li>
+								<li>Defined in cao_math.d.ts:496</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -332,7 +340,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:414</li>
+								<li>Defined in cao_math.d.ts:491</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -357,10 +365,34 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:399</li>
+								<li>Defined in cao_math.d.ts:464</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="len" class="tsd-anchor"></a>
+				<h3>len</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">len<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in cao_math.d.ts:529</li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Length of this vector</p>
+							</div>
+							<p>Calculated as <code>sqrt lenSq()</code>. If you only need to compare lengths of vectors (for example
+							when sorting) prefer using <code>lenSq</code>.</p>
+						</div>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -374,7 +406,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:444</li>
+								<li>Defined in cao_math.d.ts:521</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -396,7 +428,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:434</li>
+								<li>Defined in cao_math.d.ts:511</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -421,7 +453,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:439</li>
+								<li>Defined in cao_math.d.ts:516</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -443,7 +475,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:429</li>
+								<li>Defined in cao_math.d.ts:506</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -468,7 +500,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in cao_math.d.ts:409</li>
+								<li>Defined in cao_math.d.ts:486</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -482,6 +514,43 @@
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+				<a name="scalartriple" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> scalar<wbr>Triple</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<li class="tsd-signature tsd-kind-icon">scalar<wbr>Triple<span class="tsd-signature-symbol">(</span>u<span class="tsd-signature-symbol">: </span><a href="vec3f.html" class="tsd-signature-type">Vec3f</a>, v<span class="tsd-signature-symbol">: </span><a href="vec3f.html" class="tsd-signature-type">Vec3f</a>, w<span class="tsd-signature-symbol">: </span><a href="vec3f.html" class="tsd-signature-type">Vec3f</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in cao_math.d.ts:482</li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Calculates the &#39;scalar triple&#39; product
+								(sometimes referred to as <strong>[uvw]</strong>) of the 3 given vectors.</p>
+							</div>
+							<p>This is equivalent to <strong>det([u v w])</strong> or
+							<strong>(u cross v) dot w</strong></p>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>u: <a href="vec3f.html" class="tsd-signature-type">Vec3f</a></h5>
+							</li>
+							<li>
+								<h5>v: <a href="vec3f.html" class="tsd-signature-type">Vec3f</a></h5>
+							</li>
+							<li>
+								<h5>w: <a href="vec3f.html" class="tsd-signature-type">Vec3f</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 					</li>
 				</ul>
 			</section>
