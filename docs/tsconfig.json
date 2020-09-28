@@ -9,8 +9,8 @@
     "excludeNotExported": true,
     "includeDeclarations": true,
     "exclude": "**/node_modules/**/*",
-    "out": "../out/docs"
-    ,
-    "theme": "minimal"
+    "out": "../out/docs",
+    "theme": "minimal",
+    "readme": "./README.md"
   }
 }
