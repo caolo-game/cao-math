@@ -18,6 +18,18 @@ impl Tensor2f {
         Self { data: Vec::new() }
     }
 
+    /// Extends this instance with a list of `{ x, y }` points.
+    ///
+    /// Invalid items will be dropped
+    #[wasm_bindgen]
+    pub fn extend(&mut self, list: Box<[JsValue]>) {
+        self.data.extend(
+            list.iter()
+                .filter(|js| js.is_object())
+                .filter_map(|js| js.into_serde::<Vec2>().ok()),
+        )
+    }
+
     #[wasm_bindgen]
     pub fn push(&mut self, v: Vec2) {
         self.data.push(v);
