@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 
 /// 2 by 2 column major matrix
 #[wasm_bindgen(js_name=Mat2f)]
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
 pub struct Mat2f {
     #[wasm_bindgen(skip)]
     pub x_axis: [f32; 2],
@@ -134,6 +134,107 @@ impl Mat2f {
     #[wasm_bindgen]
     pub fn det(&self) -> f32 {
         self.x_axis[0] * self.y_axis[1] - self.x_axis[1] * self.y_axis[0]
+    }
+
+    /// Returns a new matrix which is the inverse of this.
+    ///
+    /// If `this` is not invertible then __null__ is returned.
+    #[wasm_bindgen]
+    pub fn inverted(&self) -> Option<Mat2f> {
+        let det = self.det();
+        if det == 0.0 {
+            return None;
+        }
+
+        let [u11, u21] = self.x_axis;
+        let [u12, u22] = self.y_axis;
+
+        let dev_inv = 1.0 / det;
+
+        let mat = Self {
+            x_axis: [dev_inv * u22, -dev_inv * u21],
+            y_axis: [-dev_inv * u12, dev_inv * u11],
+        };
+
+        Some(mat)
+    }
+
+    /// Returns the identity matrix
+    #[wasm_bindgen]
+    pub fn identity() -> Mat2f {
+        Mat2f {
+            x_axis: [1., 0.],
+            y_axis: [0., 1.],
+        }
+    }
+
+    /// Returns a new matrix that is the transponent of this
+    #[wasm_bindgen]
+    pub fn transposed(&self) -> Self {
+        Self {
+            x_axis: [self.x_axis[0], self.y_axis[0]],
+            y_axis: [self.x_axis[1], self.y_axis[1]],
+        }
+    }
+
+    /// Calculate `A*B=C` where `A` is self
+    #[wasm_bindgen(js_name=matMul)]
+    #[allow(non_snake_case)]
+    pub fn mat_mul(&self, B: &Mat2f) -> Mat2f {
+        let mut C = Self::default();
+        for c in 0..2 {
+            for r in 0..2 {
+                let x = C.at_mut(c, r);
+                *x = self.at(0, r) * B.at(c, 0) + self.at(1, r) * B.at(c, 1);
+            }
+        }
+        C
+    }
+
+    /// Check if the two matrices are equal, within `epsilon` range.
+    #[wasm_bindgen(js_name=almostEqual)]
+    pub fn almost_equal(&self, other: &Mat2f, epsilon: f32) -> bool {
+        self.x_axis
+            .iter()
+            .zip(other.x_axis.iter())
+            .all(|(a, b)| (a - b).abs() < epsilon)
+            && self
+                .y_axis
+                .iter()
+                .zip(other.y_axis.iter())
+                .all(|(a, b)| (a - b).abs() < epsilon)
+    }
+}
+
+impl<'a> Mul<Mat2f> for &'a Mat2f {
+    type Output = Mat2f;
+
+    fn mul(self, rhs: Mat2f) -> Self::Output {
+        self.mat_mul(&rhs)
+    }
+}
+
+impl<'a> Mul<&'a Mat2f> for &'a Mat2f {
+    type Output = Mat2f;
+
+    fn mul(self, rhs: &'a Mat2f) -> Self::Output {
+        self.mat_mul(rhs)
+    }
+}
+
+impl<'a> Mul<&'a Mat2f> for Mat2f {
+    type Output = Mat2f;
+
+    fn mul(self, rhs: &'a Mat2f) -> Self::Output {
+        self.mat_mul(rhs)
+    }
+}
+
+impl Mul<Mat2f> for Mat2f {
+    type Output = Mat2f;
+
+    fn mul(self, rhs: Mat2f) -> Self::Output {
+        self.mat_mul(&rhs)
     }
 }
 

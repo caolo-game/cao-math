@@ -230,6 +230,25 @@ impl Mat3f {
                     [self.y_axis[1], self.y_axis[2]],
                 ))
     }
+
+    /// Check if the two matrices are equal, within `epsilon` range.
+    #[wasm_bindgen(js_name=almostEqual)]
+    pub fn almost_equal(&self, other: &Mat3f, epsilon: f32) -> bool {
+        self.x_axis
+            .iter()
+            .zip(other.x_axis.iter())
+            .all(|(a, b)| (a - b).abs() < epsilon)
+            && self
+                .y_axis
+                .iter()
+                .zip(other.y_axis.iter())
+                .all(|(a, b)| (a - b).abs() < epsilon)
+            && self
+                .w_axis
+                .iter()
+                .zip(other.w_axis.iter())
+                .all(|(a, b)| (a - b).abs() < epsilon)
+    }
 }
 
 #[inline]

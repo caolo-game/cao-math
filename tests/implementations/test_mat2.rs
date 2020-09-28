@@ -67,3 +67,52 @@ fn basic_right_prod_2by2_tensor() {
         assert_eq!(y1, y2);
     }
 }
+
+#[wasm_bindgen_test]
+fn inverse_returns_correct_result() {
+    let mat = Mat2f {
+        x_axis: [4., 7.],
+        y_axis: [2., 6.],
+    }
+    .transposed();
+
+    let exp = Mat2f {
+        x_axis: [0.6, -0.7],
+        y_axis: [-0.2, 0.4],
+    }
+    .transposed();
+
+    let inv = mat.inverted().expect("expected invert to succeed");
+
+    assert_eq!(inv, exp);
+    let id = &inv * mat;
+    assert!(
+        id.almost_equal(&Mat2f::identity(), 0.000001),
+        "inverse: {:?}\'identity': {:?}",
+        inv,
+        id
+    );
+}
+
+#[wasm_bindgen_test]
+fn inverse_returns_none_is_non_invertible() {
+    let mat = Mat2f {
+        x_axis: [0., 4.],
+        y_axis: [0., -2.],
+    };
+
+    assert!(
+        mat.inverted().is_none(),
+        "matrix with 0 row is not invertible"
+    );
+
+    let mat = Mat2f {
+        x_axis: [0., 0.],
+        y_axis: [1., -2.],
+    };
+
+    assert!(
+        mat.inverted().is_none(),
+        "matrix with 0 column is not invertible"
+    );
+}
