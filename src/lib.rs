@@ -17,7 +17,7 @@ extern "C" {
 
 /// Initialize the global state of the library.
 ///
-/// Clients should not have to call this method.
+/// Users should not have to call this method.
 #[wasm_bindgen(start)]
 pub fn _start() {
     #[cfg(feature = "console_error_panic_hook")]
