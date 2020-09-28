@@ -4,6 +4,10 @@
 
 Simple linalg and [Hexagonal grid](https://www.redblobgames.com/grids/hexagons/#hex-to-pixel) implementations to help the Cao-Lo project.
 
+Intended to be used as a WASM package.
+
+[API documentation](https://caolo-game.github.io/cao-math)
+
 ## Dependencies
 
 See [here](https://rustwasm.github.io/book/game-of-life/setup.html)
@@ -12,6 +16,12 @@ See [here](https://rustwasm.github.io/book/game-of-life/setup.html)
 
 ```
 make build
+```
+
+## Running the tests
+
+```
+make test
 ```
 
 ## Documentation
