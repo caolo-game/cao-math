@@ -168,6 +168,30 @@ impl Mat3f {
         }
         C
     }
+
+    /// Calculate the determinant
+    pub fn det(&self) -> f32 {
+        (self.x_axis[0]
+            * det2(
+                [self.y_axis[1], self.y_axis[2]],
+                [self.w_axis[1], self.w_axis[2]],
+            ))
+            - (self.y_axis[0]
+                * det2(
+                    [self.x_axis[1], self.x_axis[2]],
+                    [self.w_axis[1], self.w_axis[2]],
+                ))
+            + (self.w_axis[0]
+                * det2(
+                    [self.x_axis[1], self.x_axis[2]],
+                    [self.y_axis[1], self.y_axis[2]],
+                ))
+    }
+}
+
+#[inline]
+fn det2([x1, y1]: [f32; 2], [x2, y2]: [f32; 2]) -> f32 {
+    x1 * y2 - x2 * y1
 }
 
 impl Mat3f {

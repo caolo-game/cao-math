@@ -64,6 +64,15 @@ impl Vec2 {
         self.dot(self)
     }
 
+    /// Length of this vector.
+    ///
+    /// Calculated as `sqrt lenSq()`. If you only need to compare lengths of vectors (for example
+    /// when sorting) prefer using `lenSq`.
+    #[wasm_bindgen(js_name=len)]
+    pub fn len(&self) -> f32 {
+        self.dot(self).sqrt()
+    }
+
     /// Rotate the vector around the origin counter-clockwise by `rad` radians.
     #[wasm_bindgen]
     pub fn rotate(&mut self, rad: f32) {

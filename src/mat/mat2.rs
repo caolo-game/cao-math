@@ -135,6 +135,12 @@ impl Mat2f {
         ]
         .into()
     }
+
+    /// Calculate the determinant
+    #[wasm_bindgen]
+    pub fn det(&self) -> f32 {
+        self.x_axis[0] * self.y_axis[1] - self.x_axis[1] * self.y_axis[0]
+    }
 }
 
 impl Mul<f32> for Mat2f {

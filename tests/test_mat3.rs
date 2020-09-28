@@ -1,6 +1,7 @@
 #![cfg(target_arch = "wasm32")]
 
 use cao_math::mat::mat3::Mat3f;
+use std::f32::EPSILON;
 use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);
@@ -76,4 +77,17 @@ fn basic_mat_multiplication() {
     };
 
     assert_eq!(c, control);
+}
+
+#[wasm_bindgen_test]
+fn determinant() {
+    let a = Mat3f {
+        x_axis: [6., 4., 2.],
+        y_axis: [1., -2., 8.],
+        w_axis: [1., 5., 7.],
+    };
+
+    let d = a.det();
+
+    assert!((d - -306.).abs() < EPSILON, "{}", d);
 }
