@@ -4,8 +4,6 @@ use cao_math::mat::mat3::Mat3f;
 use std::f32::EPSILON;
 use wasm_bindgen_test::*;
 
-wasm_bindgen_test_configure!(run_in_browser);
-
 #[wasm_bindgen_test]
 fn basic_left_prod_3by3() {
     let mut mat = Mat3f::scale(1.);

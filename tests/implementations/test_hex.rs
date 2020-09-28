@@ -4,8 +4,6 @@ use cao_math::hex;
 use cao_math::vec::vec2::Vec2;
 use wasm_bindgen_test::*;
 
-wasm_bindgen_test_configure!(run_in_browser);
-
 const SIZE: f32 = 12.0;
 
 #[wasm_bindgen_test]

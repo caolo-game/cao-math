@@ -7,8 +7,6 @@ use cao_math::tensor::Tensor2f;
 use cao_math::vec::vec2::Vec2;
 use wasm_bindgen_test::*;
 
-wasm_bindgen_test_configure!(run_in_browser);
-
 #[wasm_bindgen_test]
 fn basic_right_prod_2by2() {
     const SQRT3APROX: f32 = 1.73205080757;
