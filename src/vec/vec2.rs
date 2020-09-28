@@ -246,7 +246,7 @@ impl Vec2 {
     }
 
     #[wasm_bindgen(js_name=fromHomogeneous)]
-    /// Cast the Homogenous representation back to 2D
+    /// Cast the Homogenous representation back to (x, y) representation
     pub fn from_homogeneous(point: vec3::Vec3) -> Self {
         if point.x.abs() < std::f32::EPSILON {
             // if x is about 0
