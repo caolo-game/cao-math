@@ -32,8 +32,6 @@ impl Mat2f {
     }
 
     pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
-        assert!(col < 2);
-        assert!(row < 2);
         &mut self.axis_mut(col)[row]
     }
 }
@@ -105,14 +103,10 @@ impl Mat2f {
 
     #[wasm_bindgen]
     pub fn at(&self, col: usize, row: usize) -> f32 {
-        assert!(col < 2);
-        assert!(row < 2);
         self.axis(col)[row]
     }
 
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
-        assert!(col < 2);
-        assert!(row < 2);
         self.axis_mut(col)[row] = val;
     }
 

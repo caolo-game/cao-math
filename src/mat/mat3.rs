@@ -95,6 +95,7 @@ impl Mat3f {
         Mat3f::scale(1.)
     }
 
+    /// 2D scale transformation matrix.
     #[wasm_bindgen]
     pub fn scale(a: f32) -> Self {
         Self {
@@ -106,7 +107,7 @@ impl Mat3f {
         }
     }
 
-    /// Returns a 2d rotation matrix, rotatig with `a` radians counter-clockwise around the origin
+    /// Returns a 2D rotation matrix, rotatig with `rads` radians counter-clockwise around the origin
     #[wasm_bindgen]
     pub fn rotation(rads: f32) -> Self {
         let cos = rads.cos();
@@ -143,11 +144,13 @@ impl Mat3f {
         }
     }
 
+    /// Swaps the matrices in place
     #[wasm_bindgen]
     pub fn swap(&mut self, other: &mut Mat3f) {
         swap(self, other);
     }
 
+    /// Returns axis 0, 1 or 2. Panics if `col` is greater than 2.
     #[wasm_bindgen]
     pub fn axis(&self, col: usize) -> Vec3 {
         let axis = match col {
@@ -161,15 +164,11 @@ impl Mat3f {
 
     #[wasm_bindgen]
     pub fn at(&self, col: usize, row: usize) -> f32 {
-        assert!(col < 3);
-        assert!(row < 3);
-        self.axis(col)[row]
+        self.axis_ref(col)[row]
     }
 
     #[wasm_bindgen]
     pub fn set(&mut self, col: usize, row: usize, val: f32) {
-        assert!(col < 3);
-        assert!(row < 3);
         self.axis_mut(col)[row] = val;
     }
 
@@ -178,9 +177,9 @@ impl Mat3f {
     pub fn left_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for c in 0..3 {
-            for r in 0..3 {
-                res[c] += v[r] * self.at(c, r);
-            }
+            res[c] += v[0] * self.at(c, 0);
+            res[c] += v[1] * self.at(c, 1);
+            res[c] += v[2] * self.at(c, 2);
         }
         res.into()
     }
@@ -190,9 +189,9 @@ impl Mat3f {
     pub fn right_prod(&self, v: &Vec3) -> Vec3 {
         let mut res = [0.0; 3];
         for r in 0..3 {
-            for c in 0..3 {
-                res[r] += v[c] * self.at(c, r);
-            }
+            res[r] += v[0] * self.at(0, r);
+            res[r] += v[1] * self.at(1, r);
+            res[r] += v[2] * self.at(2, r);
         }
         res.into()
     }
@@ -205,10 +204,9 @@ impl Mat3f {
         for c in 0..3 {
             for r in 0..3 {
                 let x = C.at_mut(c, r);
-                *x = 0.;
-                for i in 0..3 {
-                    *x += self.at(i, r) * B.at(c, i);
-                }
+                *x = self.at(0, r) * B.at(c, 0)
+                    + self.at(1, r) * B.at(c, 1)
+                    + self.at(2, r) * B.at(c, 2);
             }
         }
         C
@@ -250,9 +248,16 @@ impl Mat3f {
     }
 
     pub fn at_mut(&mut self, col: usize, row: usize) -> &mut f32 {
-        assert!(col < 3);
-        assert!(row < 3);
         &mut self.axis_mut(col)[row]
+    }
+
+    pub fn axis_ref(&self, col: usize) -> &[f32; 3] {
+        match col {
+            0 => &self.x_axis,
+            1 => &self.y_axis,
+            2 => &self.w_axis,
+            _ => unreachable!(),
+        }
     }
 }
 
