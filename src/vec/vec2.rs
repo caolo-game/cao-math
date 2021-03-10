@@ -235,9 +235,9 @@ impl Vec2 {
         }
     }
 
-    #[wasm_bindgen(js_name=toHomogeneous)]
-    /// Casts `this` to a homogenous coordinate representation
-    pub fn to_homogeneous(&self, w: Option<f32>) -> vec3::Vec3 {
+    #[wasm_bindgen(js_name=extend)]
+    /// Casts `this` to a 3D coordinate representation
+    pub fn extend(&self, w: Option<f32>) -> vec3::Vec3 {
         vec3::Vec3 {
             x: self.x,
             y: self.y,
@@ -248,8 +248,8 @@ impl Vec2 {
     #[wasm_bindgen(js_name=fromHomogeneous)]
     /// Cast the Homogenous representation back to (x, y) representation
     pub fn from_homogeneous(point: vec3::Vec3) -> Self {
-        if point.x.abs() < std::f32::EPSILON {
-            // if x is about 0
+        if point.z.abs() < std::f32::EPSILON {
+            // if z is about 0
             Self {
                 x: point.x,
                 y: point.y,
