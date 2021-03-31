@@ -1,6 +1,9 @@
 //! Hex-Grid utilities
-use crate::mat::mat2::Mat2f;
+mod hexagon;
+pub use hexagon::*;
+
 use crate::array::Array3f;
+use crate::mat::mat2::Mat2f;
 use crate::vec::vec2::Vec2;
 use crate::vec::vec3::Vec3;
 use wasm_bindgen::prelude::*;
