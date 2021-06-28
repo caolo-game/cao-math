@@ -69,9 +69,9 @@ pub fn pixel_to_axial_flat() -> Mat2f {
 }
 
 #[wasm_bindgen(js_name = roundToNearestAxial)]
-pub fn round_to_nearest_axial(axial: &Vec2) -> Vec2 {
+pub fn round_to_nearest_axial(q: f32, r: f32) -> Vec2 {
     // convert to cube
-    let [x, z]: [f32; 2] = axial.into();
+    let [x, z] = [q, r];
     let y = -x - z;
     // round
     let [mut rx, ry, mut rz] = [x.round(), y.round(), z.round()];
